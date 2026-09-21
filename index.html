@@ -1,0 +1,1114 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>نبض بازار | قیمت دلار، طلا و ارز</title>
+
+<meta
+    name="description"
+    content="مشاهده قیمت دلار، یورو، طلای ۱۸ عیار، نقره و بیتکوین در سایت نبض بازار"
+  >
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet"
+  >
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<style>
+    :root {
+      --bg: #070b18;
+      --bg-light: #10182e;
+      --card: rgba(20, 29, 55, 0.78);
+      --card-light: rgba(255, 255, 255, 0.07);
+      --border: rgba(255, 255, 255, 0.13);
+      --text: #f7faff;
+      --muted: #9daaca;
+      --blue: #61a8ff;
+      --purple: #a987ff;
+      --gold: #ffd166;
+      --green: #2de0a0;
+      --red: #ff637d;
+    }
+
+* {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+html {
+      scroll-behavior: smooth;
+    }
+
+body {
+      min-height: 100vh;
+      color: var(--text);
+      font-family: "Vazirmatn", Tahoma, sans-serif;
+      background:
+        radial-gradient(
+          circle at 10% 0%,
+          rgba(97, 168, 255, .18),
+          transparent 30%
+        ),
+        radial-gradient(
+          circle at 90% 10%,
+          rgba(169, 135, 255, .17),
+          transparent 28%
+        ),
+        var(--bg);
+    }
+
+a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+button {
+      font-family: inherit;
+    }
+
+.container {
+      width: min(1180px, calc(100% - 30px));
+      margin-inline: auto;
+    }
+
+/* Header */
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(7, 11, 24, .82);
+      border-bottom: 1px solid var(--border);
+      backdrop-filter: blur(18px);
+    }
+
+.navbar {
+      min-height: 74px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+.logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 20px;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+
+.logo-icon {
+      width: 43px;
+      height: 43px;
+      display: grid;
+      place-items: center;
+      color: #15100a;
+      border-radius: 14px;
+      background: linear-gradient(135deg, #ffe698, #ffb703);
+      box-shadow: 0 0 28px rgba(255, 209, 102, .4);
+    }
+
+.nav-list {
+      display: flex;
+      align-items: center;
+      gap: 25px;
+      list-style: none;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+.nav-list a:hover {
+      color: white;
+    }
+
+.button {
+      border: 0;
+      border-radius: 12px;
+      padding: 11px 17px;
+      color: #07101e;
+      cursor: pointer;
+      font-weight: 700;
+      background: linear-gradient(135deg, #7dd3fc, #a987ff);
+      transition: .25s;
+    }
+
+.button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 30px rgba(97, 168, 255, .3);
+    }
+
+.button-outline {
+      color: white;
+      border: 1px solid var(--border);
+      background: rgba(255, 255, 255, .06);
+    }
+
+.menu-button {
+      display: none;
+      color: white;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 8px 11px;
+      background: transparent;
+      cursor: pointer;
+    }
+
+/* Hero */
+    .hero {
+      min-height: 510px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      gap: 35px;
+      padding: 70px 0 50px;
+    }
+
+.hero-content {
+      position: relative;
+      z-index: 2;
+    }
+
+.eyebrow {
+      display: inline-block;
+      margin-bottom: 18px;
+      color: var(--green);
+      font-size: 14px;
+    }
+
+h1 {
+      font-size: clamp(35px, 5vw, 66px);
+      line-height: 1.25;
+      font-weight: 800;
+    }
+
+h1 span {
+      color: var(--gold);
+    }
+
+.hero-description {
+      max-width: 610px;
+      margin-top: 20px;
+      color: var(--muted);
+      line-height: 2.1;
+      font-size: 16px;
+    }
+
+.hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 28px;
+    }
+
+/* Three-dimensional design */
+    .three-scene {
+      height: 390px;
+      position: relative;
+      display: grid;
+      place-items: center;
+      perspective: 900px;
+    }
+
+.three-coin {
+      width: 225px;
+      height: 225px;
+      position: relative;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      transform-style: preserve-3d;
+      animation: floating 5s ease-in-out infinite;
+      background:
+        radial-gradient(
+          circle at 30% 25%,
+          #e1f4ff,
+          #61a8ff 23%,
+          #293d91 55%,
+          #111735 76%
+        );
+      box-shadow:
+        inset -30px -25px 55px rgba(0, 0, 0, .45),
+        0 0 50px rgba(97, 168, 255, .55);
+    }
+
+.three-coin::before,
+    .three-coin::after {
+      content: "";
+      position: absolute;
+      border: 2px solid rgba(255, 209, 102, .85);
+      border-radius: 50%;
+      transform: rotateX(70deg) rotateZ(20deg);
+      box-shadow: 0 0 18px rgba(255, 209, 102, .4);
+    }
+
+.three-coin::before {
+      inset: -35px;
+    }
+
+.three-coin::after {
+      inset: -50px;
+      border-color: rgba(169, 135, 255, .75);
+      transform: rotateY(70deg) rotateZ(-25deg);
+    }
+
+.coin-symbol {
+      color: var(--gold);
+      font-size: 78px;
+      font-weight: 800;
+      text-shadow: 0 4px 20px rgba(0, 0, 0, .6);
+    }
+
+.particle {
+      width: 7px;
+      height: 7px;
+      position: absolute;
+      border-radius: 50%;
+      background: var(--gold);
+      box-shadow: 0 0 15px var(--gold);
+      animation: particleMove 4s linear infinite;
+    }
+
+.particle-one {
+      top: 13%;
+      right: 14%;
+    }
+
+.particle-two {
+      bottom: 13%;
+      left: 12%;
+      animation-delay: 1s;
+    }
+
+.particle-three {
+      top: 35%;
+      left: 3%;
+      animation-delay: 2s;
+    }
+
+.particle-four {
+      right: 8%;
+      bottom: 20%;
+      animation-delay: 3s;
+    }
+
+@keyframes floating {
+      0%, 100% {
+        transform: translateY(0) rotateY(0deg);
+      }
+
+50% {
+        transform: translateY(-18px) rotateY(12deg);
+      }
+    }
+
+@keyframes particleMove {
+      0% {
+        opacity: .2;
+        transform: translateY(25px);
+      }
+
+50% {
+        opacity: 1;
+      }
+
+100% {
+        opacity: .2;
+        transform: translateY(-35px);
+      }
+    }
+
+/* Ticker */
+    .ticker {
+      display: flex;
+      gap: 12px;
+      overflow-x: auto;
+      padding: 14px 0;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      scrollbar-width: none;
+    }
+
+.ticker::-webkit-scrollbar {
+      display: none;
+    }
+
+.ticker-item {
+      min-width: 185px;
+      padding: 13px 16px;
+      border: 1px solid var(--border);
+      border-radius: 15px;
+      background: var(--card-light);
+    }
+
+.ticker-item small {
+      color: var(--muted);
+    }
+
+.ticker-item strong {
+      display: block;
+      margin-top: 5px;
+      font-size: 17px;
+    }
+
+/* Sections */
+    .section-heading {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 15px;
+      margin: 48px 0 20px;
+    }
+
+.section-heading h2 {
+      font-size: 25px;
+    }
+
+.section-heading p {
+      margin-top: 7px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+.update-status {
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+/* Price cards */
+    .price-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 14px;
+    }
+
+.price-card {
+      min-height: 190px;
+      position: relative;
+      overflow: hidden;
+      padding: 20px;
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      background: linear-gradient(
+        145deg,
+        rgba(255, 255, 255, .095),
+        rgba(255, 255, 255, .035)
+      );
+      transition: .25s;
+    }
+
+.price-card:hover {
+      transform: translateY(-5px);
+      border-color: rgba(255, 255, 255, .3);
+    }
+
+.price-card::after {
+      content: "";
+      width: 100px;
+      height: 100px;
+      position: absolute;
+      left: -40px;
+      bottom: -45px;
+      border-radius: 50%;
+      background: var(--accent);
+      opacity: .17;
+      filter: blur(15px);
+    }
+
+.card-title {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+.asset-icon {
+      width: 42px;
+      height: 42px;
+      display: grid;
+      place-items: center;
+      margin-top: 9px;
+      border-radius: 13px;
+      color: #111;
+      font-weight: 800;
+      background: var(--accent);
+    }
+
+.asset-price {
+      margin-top: 22px;
+      font-size: 20px;
+      font-weight: 700;
+    }
+
+.asset-unit {
+      margin-top: 4px;
+      color: var(--muted);
+      font-size: 11px;
+    }
+
+.asset-change {
+      display: inline-block;
+      margin-top: 15px;
+      padding: 5px 8px;
+      border-radius: 8px;
+      color: var(--green);
+      background: rgba(45, 224, 160, .12);
+      font-size: 11px;
+    }
+
+.asset-change.down {
+      color: var(--red);
+      background: rgba(255, 99, 125, .12);
+    }
+
+/* Dashboard */
+    .dashboard {
+      display: grid;
+      grid-template-columns: 1.4fr .8fr;
+      gap: 18px;
+      margin-top: 20px;
+    }
+
+.panel {
+      padding: 21px;
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      background: var(--card);
+      backdrop-filter: blur(15px);
+    }
+
+.panel h3 {
+      margin-bottom: 18px;
+      font-size: 17px;
+    }
+
+.chart-container {
+      height: 320px;
+    }
+
+.advertisement {
+      min-height: 320px;
+      display: grid;
+      place-items: center;
+      padding: 20px;
+      color: var(--muted);
+      text-align: center;
+      border: 1px dashed rgba(255, 255, 255, .3);
+      border-radius: 16px;
+      background: linear-gradient(
+        135deg,
+        rgba(97, 168, 255, .07),
+        rgba(169, 135, 255, .07)
+      );
+    }
+
+.advertisement strong {
+      display: block;
+      margin-bottom: 9px;
+      color: white;
+    }
+
+/* SEO text */
+    .info-section {
+      margin-top: 18px;
+      color: #c8d1e7;
+      line-height: 2.1;
+    }
+
+.info-section h2,
+    .info-section h3 {
+      margin-bottom: 10px;
+      color: white;
+    }
+
+.info-section h3 {
+      margin-top: 22px;
+      font-size: 18px;
+    }
+
+/* Table */
+    .table-container {
+      overflow-x: auto;
+      margin-top: 18px;
+    }
+
+table {
+      width: 100%;
+      min-width: 550px;
+      border-collapse: collapse;
+    }
+
+th,
+    td {
+      padding: 14px 10px;
+      text-align: right;
+      border-bottom: 1px solid var(--border);
+      font-size: 13px;
+    }
+
+th {
+      color: var(--muted);
+      font-weight: 500;
+    }
+
+.online {
+      color: var(--green);
+    }
+
+/* Footer */
+    footer {
+      margin-top: 50px;
+      padding: 28px 0;
+      color: var(--muted);
+      text-align: center;
+      border-top: 1px solid var(--border);
+      font-size: 12px;
+      line-height: 2;
+    }
+
+/* Responsive */
+    @media (max-width: 950px) {
+      .hero {
+        grid-template-columns: 1fr;
+        padding-top: 45px;
+      }
+
+.three-scene {
+        height: 300px;
+      }
+
+.price-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+
+.dashboard {
+        grid-template-columns: 1fr;
+      }
+    }
+
+@media (max-width: 620px) {
+      .nav-list {
+        display: none;
+        position: absolute;
+        top: 70px;
+        right: 15px;
+        left: 15px;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0;
+        padding: 10px;
+        border: 1px solid var(--border);
+        border-radius: 15px;
+        background: var(--bg-light);
+      }
+
+.nav-list.open {
+        display: flex;
+      }
+
+.nav-list a {
+        display: block;
+        padding: 11px;
+      }
+
+.menu-button {
+        display: block;
+      }
+
+.navbar > .button {
+        display: none;
+      }
+
+.price-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+.price-card {
+        padding: 15px;
+      }
+
+.asset-price {
+        font-size: 17px;
+      }
+
+.section-heading {
+        align-items: start;
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<header class="site-header">
+    <div class="container navbar">
+
+<a class="logo" href="#">
+        <span class="logo-icon">◆</span>
+        <span>نبض بازار</span>
+      </a>
+
+<button
+        class="menu-button"
+        id="menuButton"
+        type="button"
+        aria-label="باز کردن منو"
+      >
+        ☰
+      </button>
+
+<nav>
+        <ul class="nav-list" id="navList">
+          <li><a href="#prices">قیمتها</a></li>
+          <li><a href="#chart">نمودار</a></li>
+          <li><a href="#guide">راهنما</a></li>
+          <li><a href="#advertising">تبلیغات</a></li>
+        </ul>
+      </nav>
+
+<button class="button" id="refreshButton">
+        بروزرسانی
+      </button>
+    </div>
+  </header>
+
+<main>
+
+<section class="container hero">
+
+<div class="hero-content">
+        <span class="eyebrow">● اطلاعات بازار در یک نگاه</span>
+
+<h1>
+          قیمتهای <span>بازار</span><br>
+          همیشه همراه تو
+        </h1>
+
+<p class="hero-description">
+          قیمت دلار، یورو، طلا، نقره و بیتکوین را در یک داشبورد
+          مدرن، سریع و زیبا مشاهده کن.
+        </p>
+
+<div class="hero-actions">
+          <a class="button" href="#prices">مشاهده قیمتها</a>
+          <a class="button button-outline" href="#advertising">
+            ثبت تبلیغ
+          </a>
+        </div>
+      </div>
+
+<div class="three-scene">
+        <div class="three-coin">
+          <span class="coin-symbol">₿</span>
+        </div>
+
+<span class="particle particle-one"></span>
+        <span class="particle particle-two"></span>
+        <span class="particle particle-three"></span>
+        <span class="particle particle-four"></span>
+      </div>
+
+</section>
+
+<section class="container ticker" id="ticker">
+      <div class="ticker-item">
+        <small>در حال دریافت اطلاعات...</small>
+      </div>
+    </section>
+
+<section class="container" id="prices">
+
+<div class="section-heading">
+        <div>
+          <h2>قیمتهای بازار</h2>
+          <p>
+            قیمتها تقریبی هستند و برای اطلاعرسانی نمایش داده میشوند.
+          </p>
+        </div>
+
+<span class="update-status" id="updateStatus">
+          در حال دریافت اطلاعات...
+        </span>
+      </div>
+
+<div class="price-grid">
+
+<article class="price-card" style="--accent:#61a8ff">
+          <div class="card-title">دلار آمریکا</div>
+          <div class="asset-icon">$</div>
+          <div class="asset-price" id="usdPrice">---</div>
+          <div class="asset-unit">تومان</div>
+          <span class="asset-change">بازار ارز</span>
+        </article>
+
+<article class="price-card" style="--accent:#a987ff">
+          <div class="card-title">یورو</div>
+          <div class="asset-icon">€</div>
+          <div class="asset-price" id="eurPrice">---</div>
+          <div class="asset-unit">تومان</div>
+          <span class="asset-change">نرخ جهانی</span>
+        </article>
+
+<article class="price-card" style="--accent:#ffd166">
+          <div class="card-title">طلای ۱۸ عیار</div>
+          <div class="asset-icon">Au</div>
+          <div class="asset-price" id="goldPrice">---</div>
+          <div class="asset-unit">تومان / گرم</div>
+          <span class="asset-change">محاسبه تقریبی</span>
+        </article>
+
+<article class="price-card" style="--accent:#d9e2ec">
+          <div class="card-title">نقره</div>
+          <div class="asset-icon">Ag</div>
+          <div class="asset-price" id="silverPrice">---</div>
+          <div class="asset-unit">تومان / گرم</div>
+          <span class="asset-change">محاسبه تقریبی</span>
+        </article>
+
+<article class="price-card" style="--accent:#f7931a">
+          <div class="card-title">بیتکوین</div>
+          <div class="asset-icon">₿</div>
+          <div class="asset-price" id="bitcoinPrice">---</div>
+          <div class="asset-unit">تومان</div>
+          <span class="asset-change" id="bitcoinChange">رمزارز</span>
+        </article>
+
+</div>
+    </section>
+
+<section class="container dashboard">
+
+<div class="panel" id="chart">
+        <h3>نمودار نمونه تغییرات بازار</h3>
+
+<div class="chart-container">
+          <canvas id="marketChart"></canvas>
+        </div>
+      </div>
+
+<div class="panel" id="advertising">
+        <h3>جایگاه تبلیغات</h3>
+
+<div class="advertisement">
+          <div>
+            <strong>تبلیغ شما اینجا نمایش داده میشود</strong>
+            <span>برای رزرو این جایگاه با ما تماس بگیرید</span>
+          </div>
+        </div>
+      </div>
+
+</section>
+
+<section class="container panel info-section" id="guide">
+      <h2>قیمت لحظهای دلار و طلا</h2>
+
+<p>
+        در سایت نبض بازار میتوانید قیمت تقریبی دلار، یورو، طلای ۱۸ عیار،
+        نقره و بیتکوین را مشاهده کنید. اطلاعات این صفحه برای اطلاعرسانی
+        عمومی طراحی شده است.
+      </p>
+
+<h3>قیمت طلای ۱۸ عیار چگونه محاسبه میشود؟</h3>
+
+<p>
+        قیمت تقریبی طلا بر اساس قیمت جهانی هر اونس طلا، نرخ دلار و وزن هر گرم
+        محاسبه میشود. قیمت بازار ایران ممکن است به دلیل اجرت، مالیات، حباب
+        و شرایط بازار متفاوت باشد.
+      </p>
+
+<h3>هشدار</h3>
+
+<p>
+        اطلاعات سایت توصیه مالی یا سرمایهگذاری نیست. قبل از هر معامله،
+        قیمت را از منبع معتبر بررسی کنید.
+      </p>
+    </section>
+
+<section class="container panel" style="margin-top:18px">
+      <h3>خلاصه قیمتها</h3>
+
+<div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th>دارایی</th>
+              <th>قیمت</th>
+              <th>واحد</th>
+              <th>وضعیت</th>
+            </tr>
+          </thead>
+
+<tbody id="marketTable">
+            <tr>
+              <td colspan="4">در حال دریافت اطلاعات...</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+</main>
+
+<footer>
+    نبض بازار — اطلاعات این سایت صرفاً جهت اطلاعرسانی است.
+    <br>
+    آخرین بروزرسانی:
+    <span id="footerTime">---</span>
+  </footer>
+
+<script>
+    /*
+      این مقدار را میتوانی به قیمت دلار دلخواه تغییر بدهی.
+      مثال: اگر دلار ۶۰ هزار تومان است، عدد را 60000 بگذار.
+    */
+    const IRAN_DOLLAR_TOMAN = 60000;
+
+const market = {
+      usd: IRAN_DOLLAR_TOMAN,
+      eur: 0,
+      gold: 0,
+      silver: 0,
+      bitcoin: 0
+    };
+
+const $ = (id) => document.getElementById(id);
+
+function formatToman(value) {
+      if (!value || Number.isNaN(value)) return "---";
+      return Math.round(value).toLocaleString("fa-IR");
+    }
+
+async function getExchangeRates() {
+      const response = await fetch(
+        "https://open.er-api.com/v6/latest/USD"
+      );
+
+if (!response.ok) {
+        throw new Error("خطا در دریافت نرخ ارز");
+      }
+
+return response.json();
+    }
+
+async function getBitcoin() {
+      const response = await fetch(
+        "https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd&include_24hr_change=true"
+      );
+
+if (!response.ok) {
+        throw new Error("خطا در دریافت قیمت بیتکوین");
+      }
+
+return response.json();
+    }
+
+async function getMetal(symbol) {
+      const response = await fetch(
+        "https://api.gold-api.com/price/" + symbol
+      );
+
+if (!response.ok) {
+        throw new Error("خطا در دریافت قیمت فلز");
+      }
+
+return response.json();
+    }
+
+async function loadPrices() {
+      $("updateStatus").textContent = "در حال دریافت اطلاعات...";
+
+try {
+        const [exchange, bitcoin, gold, silver] =
+          await Promise.all([
+            getExchangeRates(),
+            getBitcoin(),
+            getMetal("XAU"),
+            getMetal("XAG")
+          ]);
+
+const euroToDollar = exchange.rates.EUR || 0;
+
+market.eur = IRAN_DOLLAR_TOMAN / euroToDollar;
+
+const bitcoinDollar = bitcoin.bitcoin.usd || 0;
+        market.bitcoin = bitcoinDollar * IRAN_DOLLAR_TOMAN;
+
+const ounceToGram = 31.1035;
+
+const gold24PerGram =
+          (gold.price / ounceToGram) * IRAN_DOLLAR_TOMAN;
+
+market.gold = gold24PerGram * .75;
+
+market.silver =
+          (silver.price / ounceToGram) * IRAN_DOLLAR_TOMAN;
+
+renderPrices(bitcoin.bitcoin.usd_24h_change || 0);
+
+const now = new Date().toLocaleString("fa-IR");
+
+$("updateStatus").textContent =
+          "آخرین بروزرسانی: " + now;
+
+$("footerTime").textContent = now;
+
+} catch (error) {
+        $("updateStatus").textContent =
+          "سرویس قیمت فعلاً پاسخ نمیدهد";
+
+$("ticker").innerHTML = `
+          <div class="ticker-item">
+            <small>اطلاعات زنده موقتاً در دسترس نیست</small>
+          </div>
+        `;
+
+$("marketTable").innerHTML = `
+          <tr>
+            <td colspan="4">
+              دریافت اطلاعات با خطا روبهرو شد.
+            </td>
+          </tr>
+        `;
+      }
+    }
+
+function renderPrices(bitcoinChange) {
+      $("usdPrice").textContent = formatToman(market.usd);
+      $("eurPrice").textContent = formatToman(market.eur);
+      $("goldPrice").textContent = formatToman(market.gold);
+      $("silverPrice").textContent = formatToman(market.silver);
+      $("bitcoinPrice").textContent = formatToman(market.bitcoin);
+
+const change = $("bitcoinChange");
+
+change.textContent =
+        Number(bitcoinChange).toFixed(2) + "٪ در ۲۴ ساعت";
+
+change.classList.toggle("down", bitcoinChange < 0);
+
+const items = [
+        ["دلار آمریکا", market.usd, "تومان"],
+        ["یورو", market.eur, "تومان"],
+        ["طلای ۱۸ عیار", market.gold, "تومان / گرم"],
+        ["نقره", market.silver, "تومان / گرم"],
+        ["بیتکوین", market.bitcoin, "تومان"]
+      ];
+
+$("ticker").innerHTML = items.map(item => `
+        <div class="ticker-item">
+          <small>${item[0]}</small>
+          <strong>${formatToman(item[1])}</strong>
+          <small>${item[2]}</small>
+        </div>
+      `).join("");
+
+$("marketTable").innerHTML = items.map(item => `
+        <tr>
+          <td>${item[0]}</td>
+          <td>${formatToman(item[1])}</td>
+          <td>${item[2]}</td>
+          <td class="online">● فعال</td>
+        </tr>
+      `).join("");
+    }
+
+function createChart() {
+      const context = $("marketChart").getContext("2d");
+
+new Chart(context, {
+        type: "line",
+
+data: {
+          labels: [
+            "شنبه",
+            "یکشنبه",
+            "دوشنبه",
+            "سهشنبه",
+            "چهارشنبه",
+            "پنجشنبه",
+            "امروز"
+          ],
+
+datasets: [
+            {
+              label: "شاخص تغییرات بازار",
+              data: [42, 48, 45, 58, 55, 68, 74],
+              borderColor: "#61a8ff",
+              backgroundColor: "rgba(97, 168, 255, .13)",
+              borderWidth: 3,
+              fill: true,
+              tension: .4,
+              pointRadius: 4,
+              pointBackgroundColor: "#ffd166"
+            }
+          ]
+        },
+
+options: {
+          responsive: true,
+          maintainAspectRatio: false,
+
+plugins: {
+            legend: {
+              labels: {
+                color: "#f7faff",
+                font: {
+                  family: "Vazirmatn"
+                }
+              }
+            }
+          },
+
+scales: {
+            x: {
+              ticks: {
+                color: "#9daaca",
+                font: {
+                  family: "Vazirmatn"
+                }
+              },
+              grid: {
+                color: "rgba(255,255,255,.06)"
+              }
+            },
+
+y: {
+              ticks: {
+                color: "#9daaca"
+              },
+              grid: {
+                color: "rgba(255,255,255,.06)"
+              }
+            }
+          }
+        }
+      });
+    }
+
+$("menuButton").addEventListener("click", () => {
+      $("navList").classList.toggle("open");
+    });
+
+document.querySelectorAll(".nav-list a").forEach(link => {
+      link.addEventListener("click", () => {
+        $("navList").classList.remove("open");
+      });
+    });
+
+$("refreshButton").addEventListener("click", loadPrices);
+
+createChart();
+    loadPrices();
+
+// بروزرسانی خودکار هر پنج دقیقه
+    setInterval(loadPrices, 300000);
+  </script>
+
+</body>
+</html>
