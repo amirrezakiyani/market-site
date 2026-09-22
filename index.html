@@ -672,7 +672,7 @@ th {
         </ul>
       </nav>
 
-<button class="button" id="refreshButton">
+<button class="button" id="refreshButton" type="button">
         بروزرسانی
       </button>
     </div>
@@ -798,7 +798,7 @@ th {
 <div class="advertisement">
           <div>
             <strong>تبلیغ شما اینجا نمایش داده میشود</strong>
-            <span>برای رزرو این جایگاه با ما تماس بگیرید</span>
+            <span>برای رزرو این جایگاه با ما تماس بگیرید: <a href="mailto:amirreki.5685@gmail.com?subject=تبلیغ%20در%20نبض%20بازار">amirreki.5685@gmail.com</a></span>
           </div>
         </div>
       </div>
@@ -867,7 +867,9 @@ th {
       این مقدار را میتوانی به قیمت دلار دلخواه تغییر بدهی.
       مثال: اگر دلار ۶۰ هزار تومان است، عدد را 60000 بگذار.
     */
-    const IRAN_DOLLAR_TOMAN = 60000;
+    // نرخ پایهٔ بازار آزاد؛ قیمت‌های جهانی با دکمهٔ بروزرسانی زنده دریافت می‌شوند.
+    // این مقدار برای تبدیل قیمت جهانی به تومان استفاده می‌شود.
+    const IRAN_DOLLAR_TOMAN = 233830;
 
 const market = {
       usd: IRAN_DOLLAR_TOMAN,
@@ -921,61 +923,41 @@ return response.json();
     }
 
 async function loadPrices() {
+      const button = $("refreshButton");
+      button.disabled = true;
+      button.textContent = "در حال بروزرسانی...";
       $("updateStatus").textContent = "در حال دریافت اطلاعات...";
-
-try {
-        const [exchange, bitcoin, gold, silver] =
-          await Promise.all([
-            getExchangeRates(),
-            getBitcoin(),
-            getMetal("XAU"),
-            getMetal("XAG")
-          ]);
-
-const euroToDollar = exchange.rates.EUR || 0;
-
-market.eur = IRAN_DOLLAR_TOMAN / euroToDollar;
-
-const bitcoinDollar = bitcoin.bitcoin.usd || 0;
-        market.bitcoin = bitcoinDollar * IRAN_DOLLAR_TOMAN;
-
-const ounceToGram = 31.1035;
-
-const gold24PerGram =
-          (gold.price / ounceToGram) * IRAN_DOLLAR_TOMAN;
-
-market.gold = gold24PerGram * .75;
-
-market.silver =
-          (silver.price / ounceToGram) * IRAN_DOLLAR_TOMAN;
-
-renderPrices(bitcoin.bitcoin.usd_24h_change || 0);
-
-const now = new Date().toLocaleString("fa-IR");
-
-$("updateStatus").textContent =
-          "آخرین بروزرسانی: " + now;
-
-$("footerTime").textContent = now;
-
-} catch (error) {
-        $("updateStatus").textContent =
-          "سرویس قیمت فعلاً پاسخ نمیدهد";
-
-$("ticker").innerHTML = `
-          <div class="ticker-item">
-            <small>اطلاعات زنده موقتاً در دسترس نیست</small>
-          </div>
-        `;
-
-$("marketTable").innerHTML = `
-          <tr>
-            <td colspan="4">
-              دریافت اطلاعات با خطا روبهرو شد.
-            </td>
-          </tr>
-        `;
+      const results = await Promise.allSettled([
+        getExchangeRates(),
+        getBitcoin(),
+        getMetal("XAU"),
+        getMetal("XAG")
+      ]);
+      const [exchangeResult, bitcoinResult, goldResult, silverResult] = results;
+      if (exchangeResult.status === "fulfilled") {
+        const euroToDollar = exchangeResult.value.rates?.EUR || 0;
+        if (euroToDollar) market.eur = IRAN_DOLLAR_TOMAN / euroToDollar;
       }
+      let bitcoinChange = 0;
+      if (bitcoinResult.status === "fulfilled") {
+        const bitcoinDollar = bitcoinResult.value.bitcoin?.usd || 0;
+        if (bitcoinDollar) market.bitcoin = bitcoinDollar * IRAN_DOLLAR_TOMAN;
+        bitcoinChange = bitcoinResult.value.bitcoin?.usd_24h_change || 0;
+      }
+      const ounceToGram = 31.1035;
+      if (goldResult.status === "fulfilled" && goldResult.value.price) {
+        market.gold = (goldResult.value.price / ounceToGram) * IRAN_DOLLAR_TOMAN * .75;
+      }
+      if (silverResult.status === "fulfilled" && silverResult.value.price) {
+        market.silver = (silverResult.value.price / ounceToGram) * IRAN_DOLLAR_TOMAN;
+      }
+      renderPrices(bitcoinChange);
+      const failed = results.filter(result => result.status === "rejected").length;
+      const now = new Date().toLocaleString("fa-IR");
+      $("updateStatus").textContent = failed ? `بروزرسانی شد؛ ${failed} منبع پاسخ نداد · ${now}` : "آخرین بروزرسانی: " + now;
+      $("footerTime").textContent = now;
+      button.disabled = false;
+      button.textContent = "بروزرسانی";
     }
 
 function renderPrices(bitcoinChange) {
