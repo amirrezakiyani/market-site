@@ -961,7 +961,8 @@ th {
 <section class="container dashboard">
 
 <div class="panel" id="chart">
-        <h3>مقایسه قیمت فعلی دارایی‌ها</h3>
+        <h3>نمودار نمایشی روند بازار</h3>
+<p>این نمودار فقط نمونهٔ نمایشی است و دادهٔ تاریخی واقعی را نشان نمی‌دهد.</p>
 
 <div class="chart-container">
           <canvas id="marketChart"></canvas>
@@ -1066,8 +1067,7 @@ let dollarSource = "";
 
     async function getDollarToman() {
       const sources = [
-        "https://apiv2.nobitex.ir/v3/orderbook/USDTIRT",
-        "https://api.binance.com/api/v3/ticker/price?symbol=USDTIRT"
+        "https://apiv2.nobitex.ir/v3/orderbook/USDTIRT"
       ];
       for (const url of sources) {
         try {
@@ -1285,7 +1285,7 @@ data: {
 
 datasets: [
             {
-              label: "شاخص تغییرات بازار",
+              label: "روند نمایشی (دادهٔ نمونه)",
               data: [42, 48, 45, 58, 55, 68, 74],
               borderColor: "#4d91f7",
               backgroundColor: "rgba(77, 145, 247, .13)",
