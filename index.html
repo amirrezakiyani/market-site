@@ -1107,20 +1107,32 @@ let dollarSource = "";
         // به منبع جایگزین می‌رویم؛ مقدار جایگزین نرخ بازار آزاد محسوب نمی‌شود.
       }
 
-      // جایگزین اضطراری: نرخ مرجع USD/IRR. این نرخ ممکن است با بازار آزاد ایران فرق داشته باشد.
-      try {
-        const data = await fetchJsonWithTimeout(
-          "https://open.er-api.com/v6/latest/USD",
-          8000
-        );
-        const irrPerUsd = Number(data.rates?.IRR || 0);
-        if (data.result === "success" && Number.isFinite(irrPerUsd) && irrPerUsd > 0) {
-          dollarSource = "نرخ مرجع جایگزین (USD/IRR)؛ نه نرخ بازار آزاد";
-          return irrPerUsd / 10;
+      // منابع جایگزین نرخ مرجع USD/IRR؛ این نرخ‌ها نرخ بازار آزاد ایران نیستند.
+      const referenceSources = [
+        {
+          url: "https://open.er-api.com/v6/latest/USD",
+          read: (data) => data.result === "success" ? Number(data.rates?.IRR || 0) : 0
+        },
+        {
+          url: "https://api.exchangerate-api.com/v4/latest/USD",
+          read: (data) => Number(data.rates?.IRR || 0)
         }
-      } catch (_) {}
+      ];
 
-      throw new Error("منبع اصلی و جایگزین نرخ دلار در دسترس نیست");
+      for (const source of referenceSources) {
+        try {
+          const data = await fetchJsonWithTimeout(source.url, 6000);
+          const irrPerUsd = source.read(data);
+          if (Number.isFinite(irrPerUsd) && irrPerUsd > 0) {
+            dollarSource = "نرخ مرجع USD/IRR؛ نه نرخ بازار آزاد";
+            return irrPerUsd / 10; // تبدیل ریال به تومان
+          }
+        } catch (_) {
+          // اگر یک سرویس در مرورگر، شبکه یا CORS مسدود بود، منبع بعدی آزمایش می‌شود.
+        }
+      }
+
+      throw new Error("منابع نرخ دلار در دسترس نیستند؛ قیمت تخمینی نمایش داده نمی‌شود");
     }
 
     async function getExchangeRates() {
@@ -1275,8 +1287,9 @@ function renderPrices(bitcoinChange) {
 
 const change = $("bitcoinChange");
 
-change.textContent =
-        Number(bitcoinChange).toFixed(2) + "٪ در ۲۴ ساعت";
+change.textContent = market.bitcoin > 0
+        ? Number(bitcoinChange).toFixed(2) + "٪ در ۲۴ ساعت"
+        : "در انتظار دادهٔ معتبر";
 
 change.classList.toggle("down", bitcoinChange < 0);
 
@@ -1301,7 +1314,7 @@ $("marketTable").innerHTML = items.map(item => `
           <td>${item[0]}</td>
           <td>${formatToman(item[1])}</td>
           <td>${item[2]}</td>
-          <td class="online">● فعال</td>
+          <td class="${item[1] > 0 ? "online" : "offline"}">${item[1] > 0 ? "● فعال" : "● داده در دسترس نیست"}</td>
         </tr>
       `).join("");
     }
