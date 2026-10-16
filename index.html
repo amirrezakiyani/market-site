@@ -1205,7 +1205,7 @@ let dollarSource = "";
       return response.json();
     }
 
-    async async function fetchJsonWithTimeout(url, timeoutMs = 8000) {
+    async function fetchJsonWithTimeout(url, timeoutMs = 8000) {
       const controller = new AbortController();
       const timer = setTimeout(() => controller.abort(), timeoutMs);
       try {
