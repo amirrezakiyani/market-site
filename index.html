@@ -833,6 +833,31 @@ th {
   <!-- AdSense Auto Ads remain disabled until a valid publisher ID is configured and the site is approved. -->
   <script src="/adsense-config.js"></script>
   <script src="/adsense-loader.js" defer></script>
+
+<style id="owner-visual-polish">
+/* Shared responsive depth, glass surfaces, and accessible micro-interactions */
+:where(.service-card,.service-box,.service-item,.feature-card,.feature,.project,.project-card,.contact-card,.skill-card,.stat-card,.product-card,.product,.price-card,.panel,.profile-card,.glass-card,.card,.service,.portfolio-item){
+  transform-style:preserve-3d;
+  transition:transform .24s ease,box-shadow .24s ease,border-color .24s ease,filter .24s ease;
+  backface-visibility:hidden;
+}
+:where(.service-card,.service-box,.service-item,.feature-card,.feature,.project,.project-card,.contact-card,.skill-card,.stat-card,.product-card,.product,.price-card,.panel,.profile-card,.glass-card,.card,.service,.portfolio-item):hover{
+  transform:perspective(1000px) translateY(-5px) rotateX(1deg);
+  box-shadow:0 18px 42px rgba(42,78,139,.14);
+}
+:where(button,.btn,.button,[role="button"],.navlinks a,.nav-list a){
+  transition:transform .2s ease,box-shadow .2s ease,background-color .2s ease;
+}
+:where(button,.btn,.button,[role="button"]):hover{filter:saturate(1.08)}
+:where(a,button,input,select,textarea):focus-visible{outline-offset:3px}
+@media(max-width:620px){
+ :where(.service-card,.service-box,.service-item,.feature-card,.feature,.project,.project-card,.contact-card,.skill-card,.stat-card,.product-card,.product,.price-card,.panel,.profile-card,.glass-card,.card,.service,.portfolio-item):hover{transform:translateY(-2px)}
+}
+@media(prefers-reduced-motion:reduce){
+ :where(.service-card,.service-box,.service-item,.feature-card,.feature,.project,.project-card,.contact-card,.skill-card,.stat-card,.product-card,.product,.price-card,.panel,.profile-card,.glass-card,.card,.service,.portfolio-item,button,.btn,.button,[role="button"],.navlinks a,.nav-list a){transition:none!important}
+}
+</style>
+
 </head>
 
 <body>
