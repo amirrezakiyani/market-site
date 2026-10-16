@@ -1151,47 +1151,40 @@ function formatToman(value) {
 let dollarSource = "";
 
     async function getDollarToman() {
-      // منبع اصلی: قیمت تتر/تومان در نوبیتکس؛ ممکن است از برخی شبکه‌ها مسدود باشد.
-      try {
-        const data = await fetchJsonWithTimeout(
-          "https://apiv2.nobitex.ir/v3/orderbook/USDTIRT",
-          8000
-        );
-        const price = Number(data.lastTradePrice || data.price);
-        if (Number.isFinite(price) && price > 0) {
-          dollarSource = "نوبیتکس";
-          return price / 10; // API مقدار را به ریال می‌دهد؛ سایت تومان نمایش می‌دهد.
-        }
-      } catch (_) {
-        // به منبع جایگزین می‌رویم؛ مقدار جایگزین نرخ بازار آزاد محسوب نمی‌شود.
-      }
-
-      // منابع جایگزین نرخ مرجع USD/IRR؛ این نرخ‌ها نرخ بازار آزاد ایران نیستند.
-      const referenceSources = [
-        {
-          url: "https://open.er-api.com/v6/latest/USD",
-          read: (data) => data.result === "success" ? Number(data.rates?.IRR || 0) : 0
-        },
-        {
-          url: "https://api.exchangerate-api.com/v4/latest/USD",
-          read: (data) => Number(data.rates?.IRR || 0)
-        }
+      // نرخ تتر/تومان از دفتر سفارش نوبیتکس؛ پاسخ API به ریال است، بنابراین به تومان تبدیل می‌شود.
+      // دو دامنهٔ رسمی موازی امتحان می‌شوند تا خرابی یکی باعث از دست رفتن قیمت نشود.
+      const endpoints = [
+        "https://apiv2.nobitex.ir/v3/orderbook/USDTIRT",
+        "https://api.nobitex.ir/v3/orderbook/USDTIRT"
       ];
 
-      for (const source of referenceSources) {
-        try {
-          const data = await fetchJsonWithTimeout(source.url, 6000);
-          const irrPerUsd = source.read(data);
-          if (Number.isFinite(irrPerUsd) && irrPerUsd > 0) {
-            dollarSource = "نرخ مرجع USD/IRR؛ نه نرخ بازار آزاد";
-            return irrPerUsd / 10; // تبدیل ریال به تومان
-          }
-        } catch (_) {
-          // اگر یک سرویس در مرورگر، شبکه یا CORS مسدود بود، منبع بعدی آزمایش می‌شود.
+      const attempts = await Promise.allSettled(endpoints.map(async (url) => {
+        const data = await fetchJsonWithTimeout(url, 6500);
+        if (data.status && data.status !== "ok") {
+          throw new Error("پاسخ نامعتبر از منبع نرخ");
         }
+
+        let priceRial = Number(data.lastTradePrice || 0);
+        if (!(Number.isFinite(priceRial) && priceRial > 0)) {
+          const bid = Number(data.bids?.[0]?.[0] || 0);
+          const ask = Number(data.asks?.[0]?.[0] || 0);
+          if (bid > 0 && ask > 0) priceRial = (bid + ask) / 2;
+        }
+
+        if (!(Number.isFinite(priceRial) && priceRial > 0)) {
+          throw new Error("قیمت معتبر در دفتر سفارش پیدا نشد");
+        }
+        return priceRial / 10;
+      }));
+
+      const valid = attempts.find(result => result.status === "fulfilled");
+      if (valid) {
+        dollarSource = "نوبیتکس · بازار USDT/IRT";
+        return valid.value;
       }
 
-      throw new Error("منابع نرخ دلار در دسترس نیستند؛ قیمت تخمینی نمایش داده نمی‌شود");
+      dollarSource = "منبع نرخ در دسترس نیست";
+      throw new Error("منابع نرخ بازار آزاد در دسترس نیستند؛ از نرخ مرجع رسمی به‌عنوان قیمت بازار استفاده نمی‌شود");
     }
 
     async function getExchangeRates() {
@@ -1313,15 +1306,11 @@ let dollarSource = "";
         renderPrices(bitcoinChange);
 
         const failedNames = [];
-        if (dollarResult.status === "rejected") failedNames.push("دلار");
-        if (exchangeResult.status === "rejected") failedNames.push("یورو");
-        if (metalsResult.status === "rejected") {
-          failedNames.push("طلا و نقره");
-        } else {
-          if (!metalsResult.value?.goldPrice) failedNames.push("طلا");
-          if (!metalsResult.value?.silverPrice) failedNames.push("نقره");
-        }
-        if (bitcoinResult.status === "rejected") failedNames.push("بیتکوین");
+        if (!(market.usd > 0)) failedNames.push("دلار");
+        if (!(market.eur > 0)) failedNames.push("یورو");
+        if (!(market.gold > 0)) failedNames.push("طلا");
+        if (!(market.silver > 0)) failedNames.push("نقره");
+        if (!(market.bitcoin > 0)) failedNames.push("بیت‌کوین");
 
         const now = new Date().toLocaleString("fa-IR");
         $("updateStatus").textContent = failedNames.length
