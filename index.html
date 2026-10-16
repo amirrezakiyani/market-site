@@ -1092,22 +1092,35 @@ function formatToman(value) {
 let dollarSource = "";
 
     async function getDollarToman() {
-      const sources = [
-        "https://apiv2.nobitex.ir/v3/orderbook/USDTIRT"
-      ];
-      for (const url of sources) {
-        try {
-          const response = await fetch(url, { cache: "no-store" });
-          if (!response.ok) continue;
-          const data = await response.json();
-          const price = Number(data.lastTradePrice || data.price);
-          if (Number.isFinite(price) && price > 0) {
-            dollarSource = url.includes("nobitex") ? "نوبیتکس" : "Binance";
-            return url.includes("nobitex") ? price / 10 : price;
-          }
-        } catch (_) {}
+      // منبع اصلی: قیمت تتر/تومان در نوبیتکس؛ ممکن است از برخی شبکه‌ها مسدود باشد.
+      try {
+        const data = await fetchJsonWithTimeout(
+          "https://apiv2.nobitex.ir/v3/orderbook/USDTIRT",
+          8000
+        );
+        const price = Number(data.lastTradePrice || data.price);
+        if (Number.isFinite(price) && price > 0) {
+          dollarSource = "نوبیتکس";
+          return price / 10; // API مقدار را به ریال می‌دهد؛ سایت تومان نمایش می‌دهد.
+        }
+      } catch (_) {
+        // به منبع جایگزین می‌رویم؛ مقدار جایگزین نرخ بازار آزاد محسوب نمی‌شود.
       }
-      throw new Error("منبع نرخ دلار در دسترس نیست");
+
+      // جایگزین اضطراری: نرخ مرجع USD/IRR. این نرخ ممکن است با بازار آزاد ایران فرق داشته باشد.
+      try {
+        const data = await fetchJsonWithTimeout(
+          "https://open.er-api.com/v6/latest/USD",
+          8000
+        );
+        const irrPerUsd = Number(data.rates?.IRR || 0);
+        if (data.result === "success" && Number.isFinite(irrPerUsd) && irrPerUsd > 0) {
+          dollarSource = "نرخ مرجع جایگزین (USD/IRR)؛ نه نرخ بازار آزاد";
+          return irrPerUsd / 10;
+        }
+      } catch (_) {}
+
+      throw new Error("منبع اصلی و جایگزین نرخ دلار در دسترس نیست");
     }
 
     async function getExchangeRates() {
