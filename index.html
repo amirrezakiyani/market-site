@@ -1244,7 +1244,12 @@ let dollarSource = "";
         const failedNames = [];
         if (dollarResult.status === "rejected") failedNames.push("دلار");
         if (exchangeResult.status === "rejected") failedNames.push("یورو");
-        if (metalsResult.status === "rejected") failedNames.push("طلا و نقره");
+        if (metalsResult.status === "rejected") {
+          failedNames.push("طلا و نقره");
+        } else {
+          if (!metalsResult.value?.goldPrice) failedNames.push("طلا");
+          if (!metalsResult.value?.silverPrice) failedNames.push("نقره");
+        }
         if (bitcoinResult.status === "rejected") failedNames.push("بیتکوین");
 
         const now = new Date().toLocaleString("fa-IR");
