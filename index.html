@@ -613,6 +613,20 @@ th {
     }
 
 /* Footer */
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 12px 20px;
+      margin-top: 12px;
+    }
+
+    .footer-links a {
+      color: var(--blue);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+
     footer {
       margin-top: 50px;
       padding: 28px 0;
@@ -815,6 +829,9 @@ th {
     @media(max-width:620px){.market-crystal{width:188px;height:188px}.crystal-content strong{font-size:29px}.crystal-ring{width:245px;height:82px}.crystal-ring.two{width:220px;height:220px}.crystal-ring.three{width:198px;height:198px}.crystal-chip{padding:7px 9px;font-size:9px}}
 
 </style>
+  <!-- AdSense Auto Ads remain disabled until a valid publisher ID is configured and the site is approved. -->
+  <script src="/adsense-config.js"></script>
+  <script src="/adsense-loader.js" defer></script>
 </head>
 
 <body>
@@ -1039,6 +1056,12 @@ th {
     <br>
     آخرین بروزرسانی:
     <span id="footerTime">---</span>
+    <nav class="footer-links" aria-label="اطلاعات سایت">
+      <a href="/about.html">درباره نبض بازار</a>
+      <a href="/methodology.html">روش محاسبه قیمت‌ها</a>
+      <a href="/privacy-policy.html">حریم خصوصی</a>
+      <a href="mailto:amirreki.5685@gmail.com?subject=تماس%20با%20نبض%20بازار">تماس با ما</a>
+    </nav>
   </footer>
 
 <script>
