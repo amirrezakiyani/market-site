@@ -13,6 +13,6 @@ This repository is **prepared for**, but does not yet serve, Google AdSense ads.
 
 ## Current state
 
-- AdSense loader is present but **off** because no publisher ID or approved account was available to this code change.
+- AdSense loader is present but **off** because `autoAdsEnabled` is intentionally `false` in `adsense-config.js` until AdSense's Sites page confirms the site is ready. The publisher ID is configured, but an ID alone does not mean ads are approved or serving.
 - This repository change cannot accept Google terms, enter payee/tax/bank information, or obtain site approval. The connected account dashboard still lists payment details and site connection as required setup steps.
 - Approval and earnings are not guaranteed. Ads pay only when valid traffic and monetizable impressions/clicks occur; never click your own ads or encourage others to do so.
