@@ -1313,6 +1313,52 @@ header.site-header .menu-button {
 }
 </style>
 
+
+<style id="remove-top-and-bottom-light-bands">
+/* Remove light-colored bands at the very top and bottom; keep all other sections unchanged. */
+html, body {
+  margin: 0 !important;
+  padding: 0 !important;
+  min-height: 100%;
+  background: #070b18 !important;
+  background-color: #070b18 !important;
+}
+body {
+  overflow-x: clip;
+}
+body::before,
+body::after {
+  background: transparent !important;
+  box-shadow: none !important;
+}
+header.site-header {
+  display: block !important;
+  width: 100% !important;
+  max-width: none !important;
+  margin: 0 !important;
+  border-radius: 0 !important;
+  background: rgba(15, 23, 42, 0.92) !important;
+  border-top: 0 !important;
+  box-shadow: none !important;
+}
+footer {
+  display: block !important;
+  width: 100% !important;
+  max-width: none !important;
+  box-sizing: border-box !important;
+  margin: 0 !important;
+  margin-top: 0 !important;
+  padding: 30px 18px !important;
+  border: 0 !important;
+  border-top: 1px solid rgba(255, 215, 0, 0.16) !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  color: #dce7f6 !important;
+  background: #070b18 !important;
+  background-image: none !important;
+}
+</style>
+
 </head>
 
 <body>
