@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
-<link rel="icon" type="image/png" sizes="96x96" href="/favicon.png">
+<!-- Animated Canvas favicon is initialized by #nabz-animated-favicon below. -->
 
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -1885,5 +1885,158 @@ a:focus-visible,button:focus-visible{outline:3px solid #f4c36b!important;outline
 <script id="nabz-focused-3d">
 (()=>{const init=()=>{const scene=document.querySelector('.three-scene');const crystal=scene?.querySelector('.market-crystal');const rings=scene?.querySelectorAll('.crystal-ring');if(!scene||!crystal||!rings?.length||matchMedia('(prefers-reduced-motion: reduce)').matches)return;let frame=0;scene.addEventListener('pointermove',e=>{if(e.pointerType==='touch')return;const r=scene.getBoundingClientRect();const x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;cancelAnimationFrame(frame);frame=requestAnimationFrame(()=>{crystal.style.transform='rotateX('+(-y*12).toFixed(1)+'deg) rotateY('+(x*15).toFixed(1)+'deg) translateZ(22px)';rings.forEach((ring,i)=>{ring.style.animationPlayState='paused';ring.style.transform='rotateX('+(65+i*5).toFixed(1)+'deg) rotateY('+(x*(i+1)*9).toFixed(1)+'deg) rotateZ('+(i*31+x*8).toFixed(1)+'deg) translateY('+(y*(i+1)*8).toFixed(1)+'px)'})})},{passive:true});scene.addEventListener('pointerleave',()=>{cancelAnimationFrame(frame);crystal.style.transform='';rings.forEach(r=>{r.style.transform='';r.style.animationPlayState=''})},{passive:true})};if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init,{once:true});else init()})();
 </script>
+
+<script id="nabz-animated-favicon">
+(() => {
+  "use strict";
+
+  // Canvas-drawn animated favicon: a rotating dollar coin followed by a gold coin.
+  // Small 32px frames and 10 fps keep CPU use low. No external assets or libraries.
+  const start = () => {
+    if (window.__nabzFaviconAnimationStarted) return;
+    window.__nabzFaviconAnimationStarted = true;
+
+    const reducedMotion = window.matchMedia &&
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const size = 32;
+    const fpsInterval = 100; // 10 frames per second
+    const canvas = document.createElement("canvas");
+    canvas.width = size;
+    canvas.height = size;
+
+    let ctx;
+    try { ctx = canvas.getContext("2d", { alpha: true }); } catch (_) { ctx = null; }
+    if (!ctx || typeof canvas.toDataURL !== "function") return;
+
+    // Remove any pre-existing icon link, then create exactly one managed favicon.
+    document.querySelectorAll('link[rel~="icon"]').forEach(link => link.remove());
+    const iconLink = document.createElement("link");
+    iconLink.rel = "icon";
+    iconLink.type = "image/png";
+    document.head.appendChild(iconLink);
+
+    const TAU = Math.PI * 2;
+    const gold = {
+      outer: "#f8df91", rim: "#b77b24", face: "#edbd4e",
+      light: "#fff0b0", dark: "#7e4a12", symbol: "#51300e"
+    };
+    const dollar = {
+      outer: "#b5e8c2", rim: "#24664b", face: "#398663",
+      light: "#d7f5c9", dark: "#103d35", symbol: "#f1f6c8"
+    };
+
+    function coinGradient(x, y, radius, colors) {
+      const gradient = ctx.createRadialGradient(
+        x - radius * 0.34, y - radius * 0.4, radius * 0.08,
+        x, y, radius * 1.15
+      );
+      gradient.addColorStop(0, colors.light);
+      gradient.addColorStop(0.38, colors.face);
+      gradient.addColorStop(0.78, colors.rim);
+      gradient.addColorStop(1, colors.dark);
+      return gradient;
+    }
+
+    function drawCoin(x, y, radius, angle, colors, symbol) {
+      // The changing horizontal radius creates a lightweight 3D flip.
+      const depth = Math.max(0.12, Math.abs(Math.cos(angle)));
+      ctx.save();
+      ctx.translate(x, y);
+      ctx.scale(depth, 1);
+      ctx.shadowColor = "rgba(0,0,0,.55)";
+      ctx.shadowBlur = 3;
+      ctx.shadowOffsetY = 2;
+
+      ctx.beginPath();
+      ctx.arc(0, 0, radius, 0, TAU);
+      ctx.fillStyle = coinGradient(0, 0, radius, colors);
+      ctx.fill();
+      ctx.shadowColor = "transparent";
+      ctx.shadowBlur = 0;
+      ctx.shadowOffsetY = 0;
+
+      ctx.lineWidth = Math.max(1, radius * 0.13);
+      ctx.strokeStyle = colors.outer;
+      ctx.stroke();
+
+      ctx.beginPath();
+      ctx.arc(0, 0, radius * 0.79, 0, TAU);
+      ctx.lineWidth = Math.max(0.65, radius * 0.055);
+      ctx.strokeStyle = "rgba(255,248,211,.68)";
+      ctx.stroke();
+
+      // Engraved highlight and a bold, recognizable coin mark.
+      ctx.beginPath();
+      ctx.arc(-radius * 0.14, -radius * 0.16, radius * 0.49, Math.PI * 1.08, Math.PI * 1.78);
+      ctx.strokeStyle = "rgba(255,255,255,.24)";
+      ctx.lineWidth = Math.max(0.7, radius * 0.07);
+      ctx.stroke();
+
+      ctx.fillStyle = colors.symbol;
+      ctx.textAlign = "center";
+      ctx.textBaseline = "middle";
+      ctx.font = "900 " + (symbol === "Au" ? Math.max(7, radius * 0.75) : Math.max(11, radius * 1.25)) + "px Georgia, serif";
+      ctx.fillText(symbol, 0, radius * 0.015);
+      ctx.restore();
+    }
+
+    let lastFrame = 0;
+    let frameNumber = 0;
+    let animationId = 0;
+    let stopped = false;
+
+    function render(now) {
+      if (stopped) return;
+      animationId = window.requestAnimationFrame(render);
+      if (now - lastFrame < fpsInterval) return;
+      lastFrame = now - ((now - lastFrame) % fpsInterval);
+      frameNumber += 1;
+
+      ctx.clearRect(0, 0, size, size);
+      const angle = reducedMotion ? 0 : frameNumber * 0.19;
+      // Two overlapping coins: USD in front-left, gold behind-right.
+      const dollarAngle = angle;
+      const goldAngle = angle + Math.PI * 0.72;
+      drawCoin(11.2, 17.3, 9.2, dollarAngle, dollar, "$");
+      drawCoin(21.1, 13.1, 8.2, goldAngle, gold, "Au");
+
+      try {
+        // A fresh PNG data URL on each frame makes the browser see an updated icon.
+        iconLink.href = canvas.toDataURL("image/png");
+      } catch (_) {
+        stopped = true;
+        if (animationId) window.cancelAnimationFrame(animationId);
+      }
+
+      // Reduced-motion users receive a crisp, static two-coin icon.
+      if (reducedMotion) {
+        stopped = true;
+        if (animationId) window.cancelAnimationFrame(animationId);
+      }
+    }
+
+    // Draw immediately so the tab does not wait for the first animation tick.
+    render(0);
+
+    // Stop the loop when the page is hidden to avoid background work.
+    document.addEventListener("visibilitychange", () => {
+      if (document.hidden) {
+        if (animationId) window.cancelAnimationFrame(animationId);
+        animationId = 0;
+      } else if (!stopped && !animationId) {
+        lastFrame = 0;
+        animationId = window.requestAnimationFrame(render);
+      }
+    });
+  };
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", start, { once: true });
+  } else {
+    start();
+  }
+})();
+</script>
+
 </body>
 </html>
