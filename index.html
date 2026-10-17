@@ -829,6 +829,113 @@ th {
     @keyframes chipFloat { 0%,100%{translate:0 0}50%{translate:0 -8px} }
     @media(max-width:620px){.market-crystal{width:188px;height:188px}.crystal-content strong{font-size:29px}.crystal-ring{width:245px;height:82px}.crystal-ring.two{width:220px;height:220px}.crystal-ring.three{width:198px;height:198px}.crystal-chip{padding:7px 9px;font-size:9px}}
 
+
+/* === FINAL DARK THEME OVERRIDES: header, page, price table and footer === */
+:root{
+  color-scheme:dark;
+  --bg:#07111f;
+  --bg-light:#101d31;
+  --card:#12243a;
+  --card-light:rgba(255,255,255,.055);
+  --border:rgba(151,184,220,.16);
+  --text:#f2f6ff;
+  --muted:#b4c4da;
+}
+html,body{
+  min-height:100%;
+  color:#f2f6ff!important;
+  background-color:#07111f!important;
+}
+body{
+  background-image:
+    radial-gradient(ellipse at 12% 0%,rgba(70,111,220,.17),transparent 34%),
+    radial-gradient(ellipse at 88% 9%,rgba(31,194,168,.11),transparent 29%),
+    linear-gradient(180deg,#0b1628 0%,#07111f 55%,#0b1728 100%)!important;
+  background-attachment:fixed!important;
+}
+.site-header,header.site-header{
+  background:rgba(5,14,27,.94)!important;
+  color:#f5f8ff!important;
+  border:0!important;
+  border-bottom:1px solid rgba(143,174,219,.2)!important;
+  box-shadow:0 10px 32px rgba(0,0,0,.28)!important;
+  backdrop-filter:blur(22px)!important;
+  -webkit-backdrop-filter:blur(22px)!important;
+}
+.site-header .logo,.site-header .nav-list a,.site-header .menu-button{color:#f2f6ff!important}
+.site-header .nav-list a:hover{color:#ffd166!important}
+.site-header .menu-button{background:rgba(255,255,255,.04)!important;border-color:rgba(151,184,220,.22)!important}
+.site-header .nav-list{background:rgba(8,19,34,.98)!important;color:#f2f6ff!important}
+footer{
+  position:relative!important;
+  z-index:2!important;
+  margin-top:36px!important;
+  padding:30px 18px!important;
+  color:#dce7f6!important;
+  background:linear-gradient(145deg,#0b1728 0%,#07111f 65%,#0d1b2e 100%)!important;
+  border:0!important;
+  border-top:1px solid rgba(143,174,219,.18)!important;
+  border-radius:0!important;
+  box-shadow:none!important;
+  text-align:center!important;
+}
+footer *,footer .footer-note,footer .footer-love{color:#dce7f6}
+footer .footer-love{color:#f5f8ff!important}
+footer .heart{color:#ff334f!important}
+footer .footer-smile{color:#ffd166!important}
+footer .footer-links a{color:#70e2d1!important}
+footer .footer-links a:hover{color:#ffd166!important}
+.table-container{
+  overflow-x:auto!important;
+  overflow-y:hidden!important;
+  border-radius:18px!important;
+  background:#101f33!important;
+  border:1px solid rgba(143,174,219,.16)!important;
+  box-shadow:0 14px 34px rgba(0,0,0,.2)!important;
+  isolation:isolate;
+}
+table,#marketTable,thead,tbody,tr,th,td{
+  background-color:transparent!important;
+  color:#eaf2ff!important;
+}
+table{
+  width:100%;
+  border-collapse:separate!important;
+  border-spacing:0!important;
+  border:0!important;
+  border-radius:18px!important;
+  overflow:hidden;
+  background:#101f33!important;
+}
+thead{background:#142740!important}
+th{
+  color:#c6d7ed!important;
+  background:#142740!important;
+  border-color:rgba(143,174,219,.16)!important;
+}
+td{
+  color:#eaf2ff!important;
+  background:#101f33!important;
+  border-color:rgba(143,174,219,.12)!important;
+}
+tbody tr:nth-child(even) td{background:#122239!important}
+tbody tr:hover td{background:#172b44!important}
+.price-card,.panel,.advertisement,.info-section,.ticker-item,.dollar-price-box{
+  color:#edf4ff!important;
+  background:linear-gradient(145deg,#142740 0%,#0c1a2c 100%)!important;
+  border-color:rgba(143,174,219,.16)!important;
+}
+.panel p,.info-section p,.section-heading p,.asset-unit,.card-title{color:#bdcde1!important}
+.panel h2,.panel h3,.info-section h2,.info-section h3{color:#f3f7ff!important}
+.advertisement span{color:#c7d5e7!important}
+.advertisement strong{color:#ffd166!important}
+body :is(.container,.dashboard,main,section,article){color:#edf4ff}
+@media(max-width:620px){
+  .site-header .nav-list{background:rgba(7,17,31,.98)!important}
+  .table-container,table{border-radius:14px!important}
+  footer{padding:25px 14px!important}
+}
+
 </style>
   <!-- AdSense Auto Ads remain disabled until AdSense approves the site and marks it ready. -->
   <script src="/adsense-config.js"></script>
