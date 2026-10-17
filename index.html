@@ -1295,22 +1295,31 @@ let dollarSource = "";
 
       try {
         const results = await Promise.allSettled([
+          fetchJsonWithTimeout("/api/tgju", 9000),
           getDollarToman(),
           getExchangeRates(),
           getBitcoin(),
           getMetals()
         ]);
 
-        const [dollarResult, exchangeResult, bitcoinResult, metalsResult] = results;
+        const [tgjuResult, dollarResult, exchangeResult, bitcoinResult, metalsResult] = results;
+        const localPrices = tgjuResult.status === "fulfilled" &&
+          tgjuResult.value?.success === true ? tgjuResult.value : null;
 
-        if (dollarResult.status === "fulfilled") {
+        if (localPrices && Number(localPrices.usd) > 0) {
+          market.usd = Number(localPrices.usd);
+          dollarSource = "TGJU · دلار آزاد";
+        } else if (dollarResult.status === "fulfilled") {
           market.usd = dollarResult.value;
+          dollarSource = "نوبیتکس · شاخص تتر/تومان";
         } else {
           market.usd = 0;
-          dollarSource = "خطا در منبع دلار";
+          dollarSource = "منبع قیمت دلار در دسترس نیست";
         }
 
-        if (exchangeResult.status === "fulfilled" && market.usd > 0) {
+        if (localPrices && Number(localPrices.eur) > 0) {
+          market.eur = Number(localPrices.eur);
+        } else if (exchangeResult.status === "fulfilled" && market.usd > 0) {
           const euroToDollar = Number(exchangeResult.value.rates?.EUR || 0);
           market.eur = euroToDollar > 0 ? market.usd / euroToDollar : 0;
         } else {
@@ -1327,12 +1336,17 @@ let dollarSource = "";
         }
 
         const ounceToGram = 31.1035;
-
-        if (metalsResult.status === "fulfilled" && market.usd > 0) {
+        if (localPrices && Number(localPrices.gold18) > 0) {
+          market.gold = Number(localPrices.gold18);
+        } else if (metalsResult.status === "fulfilled" && market.usd > 0) {
           market.gold = (metalsResult.value.goldPrice / ounceToGram) * market.usd * 0.75;
-          market.silver = (metalsResult.value.silverPrice / ounceToGram) * market.usd;
         } else {
           market.gold = 0;
+        }
+
+        if (metalsResult.status === "fulfilled" && market.usd > 0) {
+          market.silver = (metalsResult.value.silverPrice / ounceToGram) * market.usd;
+        } else {
           market.silver = 0;
         }
 
@@ -1346,9 +1360,10 @@ let dollarSource = "";
         if (!(market.bitcoin > 0)) failedNames.push("بیت‌کوین");
 
         const now = new Date().toLocaleString("fa-IR");
+        const sourceLabel = localPrices ? "TGJU · بازار داخلی" : dollarSource;
         $("updateStatus").textContent = failedNames.length
           ? "منبع در دسترس نبود: " + failedNames.join("، ") + " · " + now
-          : "آخرین بروزرسانی: " + dollarSource + " · " + now;
+          : "آخرین بروزرسانی: " + sourceLabel + " · " + now;
         $("footerTime").textContent = now;
       } catch (error) {
         console.error("خطا در بروزرسانی بازار:", error);
