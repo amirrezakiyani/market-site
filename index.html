@@ -922,6 +922,14 @@ body{font-family:Vazirmatn,Tahoma,sans-serif;background:radial-gradient(ellipse 
 @media(max-width:620px){.three-scene{height:320px;min-height:320px;border-radius:21px}.market-crystal{width:160px;height:160px}.crystal-content strong{font-size:25px}.crystal-ring{width:225px;height:65px}.crystal-ring.two{width:205px;height:205px}.crystal-ring.three{width:180px;height:180px}.crystal-chip{font-size:9px;padding:7px 8px}.floating-chart{width:84px;height:52px;left:2%;top:17%}.floating-badge{font-size:9px;padding:7px 8px}.badge-one{right:3%;bottom:24%}.badge-two{left:3%;bottom:7%}}
 @media(prefers-reduced-motion:reduce){.market-crystal,.crystal-ring,.crystal-spark,.particle{animation:none!important}}
 </style>
+
+<style id="market-mobile-overflow-fix">
+html,body{max-width:100%;overflow-x:clip}
+.hero{min-width:0}
+.hero>*{min-width:0;max-width:100%}
+.hero-content,.three-scene{min-width:0;width:100%;max-width:100%}
+@media(max-width:620px){.container{width:calc(100% - 28px)}.hero{width:calc(100% - 28px)}.owner-contact{width:auto;max-width:calc(100% - 28px);margin-inline:auto}.crystal-chip,.floating-badge{max-width:48%;overflow-wrap:anywhere}}
+</style>
 </head>
 
 <body>
@@ -989,7 +997,7 @@ body{font-family:Vazirmatn,Tahoma,sans-serif;background:radial-gradient(ellipse 
           <div class="crystal-depth"></div><div class="crystal-face crystal-back"></div><div class="crystal-face crystal-front"></div>
           <div class="crystal-content"><strong>NABZ</strong><span>LIVE MARKET DATA</span></div>
         </div>
-        <span class="crystal-chip chip-a">شاخص تتر <b id="heroUsd">در حال دریافت</b></span>
+        <span class="crystal-chip chip-a"><span id="heroUsdLabel">دلار آزاد</span> <b id="heroUsd">در حال دریافت</b></span>
         <span class="crystal-chip chip-b">طلای ۱۸ عیار <b id="heroGold">در حال دریافت</b></span>
         <span class="crystal-chip chip-c">داشبورد بازار · زنده</span>
         <span class="crystal-spark spark-a"></span><span class="crystal-spark spark-b"></span><span class="crystal-spark spark-c"></span>
@@ -1381,6 +1389,7 @@ function renderPrices(bitcoinChange) {
       $("silverPrice").textContent = formatToman(market.silver);
       $("bitcoinPrice").textContent = formatToman(market.bitcoin);
       if ($("heroUsd")) $("heroUsd").textContent = market.usd > 0 ? formatToman(market.usd) + " تومان" : "ناموجود";
+      if ($("heroUsdLabel")) $("heroUsdLabel").textContent = dollarSource.includes("TGJU") ? "دلار آزاد" : "شاخص تتر";
       if ($("heroGold")) $("heroGold").textContent = market.gold > 0 ? formatToman(market.gold) + " تومان" : "ناموجود";
       if ($("heroLiveState")) $("heroLiveState").textContent = [market.usd, market.eur, market.gold, market.silver, market.bitcoin].some(value => value > 0) ? "متصل" : "بدون داده";
 
