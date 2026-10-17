@@ -1156,12 +1156,11 @@ html,body{max-width:100%;overflow-x:clip}
       </div>
 
 
-      <!-- Dollar concept prototype: the remaining assets keep their current data/UI until this direction is approved. -->
-      <nav class="lux-tabs" aria-label="موضوع بازار">
-        <button class="lux-tab is-active" type="button" aria-current="page"><span class="lux-tab-coin">$</span><span>دلار</span><small>نمونه فعال</small></button>
-        <button class="lux-tab" type="button" disabled><span class="lux-tab-coin gold-coin">Au</span><span>طلا</span><small>مرحله بعد</small></button>
-        <button class="lux-tab" type="button" disabled><span class="lux-tab-coin btc-coin">₿</span><span>بیت‌کوین</span><small>مرحله بعد</small></button>
-        <button class="lux-tab" type="button" disabled><span class="lux-tab-coin euro-coin">€</span><span>یورو</span><small>مرحله بعد</small></button>
+      <nav class="lux-tabs" aria-label="انتخاب دارایی برای مشاهده قیمت">
+        <button class="lux-tab is-active" type="button" data-target="usdPrice" aria-current="true"><span class="lux-tab-coin">$</span><span>دلار</span></button>
+        <button class="lux-tab" type="button" data-target="goldPrice"><span class="lux-tab-coin gold-coin">Au</span><span>طلا</span></button>
+        <button class="lux-tab" type="button" data-target="bitcoinPrice"><span class="lux-tab-coin btc-coin">₿</span><span>بیت‌کوین</span></button>
+        <button class="lux-tab" type="button" data-target="eurPrice"><span class="lux-tab-coin euro-coin">€</span><span>یورو</span></button>
       </nav>
       <section class="dollar-showcase" aria-labelledby="dollarShowcaseTitle">
         <div class="dollar-backdrop" aria-hidden="true">
@@ -1304,7 +1303,8 @@ html,body{max-width:100%;overflow-x:clip}
 </main>
 
 <footer>
-    نبض بازار — اطلاعات این سایت صرفاً جهت اطلاعرسانی است.
+    <div class="footer-love">ساخته‌شده با عشق <span class="heart" aria-label="قلب قرمز">♥</span> امیررضا کیانی <span class="footer-smile" aria-label="لبخند">☺</span></div>
+    <div class="footer-note">نبض بازار — اطلاعات این سایت صرفاً جهت اطلاع‌رسانی است.</div>
     <br>
     آخرین بروزرسانی:
     <span id="footerTime">---</span>
@@ -1929,9 +1929,52 @@ a:focus-visible,button:focus-visible{outline:3px solid #f4c36b!important;outline
 @media(max-width:620px){.hero{padding:28px 15px!important;border-radius:22px!important}.three-scene{min-height:300px!important;height:300px!important;border-radius:18px!important}.ticker{padding:10px!important}.ticker-item{min-width:150px!important}.price-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.price-card{padding:15px!important;min-width:0}.asset-price{font-size:17px!important}.panel,.info-section{border-radius:18px!important}.info-section{padding:20px!important}#owner-contact,#ad-contact-shared{width:calc(100% - 28px)!important;padding:20px 16px!important}}
 @media(max-width:370px){.price-grid{grid-template-columns:1fr}.three-scene{height:270px!important;min-height:270px!important}}
 @media(prefers-reduced-motion:reduce){.market-crystal,.crystal-ring,.particle{animation:none!important}*,*:before,*:after{transition:none!important}}
+
+/* Final readability and layout refinements */
+.hero{border:0!important;border-radius:0!important;background:transparent!important;box-shadow:none!important;overflow:visible!important}
+.hero:before,.hero:after{display:none!important}
+.three-scene{border:0!important;border-radius:0!important;background:transparent!important;box-shadow:none!important}
+.asset-coin-face:after{content:"NABZ"!important}
+.dollar-coin-3d .asset-coin-face:after{content:"NABZ"!important}
+.gold-coin-3d .asset-coin-face:after{content:"BAZAR"!important;font-size:15px!important;letter-spacing:.08em!important}
+.section-heading p{color:#d5e1f1!important;font-size:14px!important;line-height:1.9!important}
+.lux-tabs{border:0!important;border-radius:0!important;box-shadow:none!important;background:rgba(7,16,29,.62)!important}
+.lux-tab{color:#f1f6ff!important;border-radius:8px!important}
+.lux-tab small{display:none!important}
+.lux-tab:disabled{opacity:1!important}
+footer{position:relative!important;z-index:2!important;margin-top:35px!important;padding:30px 18px!important;background:#07111f!important;color:#d8e5f5!important;border:0!important;border-top:1px solid rgba(143,174,219,.18)!important;text-align:center!important;min-height:0!important}
+.footer-love{font-size:16px;font-weight:800;color:#f2f6ff;margin-bottom:10px}
+.footer-love .heart{color:#ff334f;font-size:22px;vertical-align:-2px;padding:0 4px;text-shadow:0 0 12px #ff334f55}
+.footer-smile{color:#f4c36b;font-size:22px;vertical-align:-2px;padding-right:4px}
+.footer-note{color:#b8c9df;line-height:1.9}
+#owner-contact,#ad-contact-shared{background:linear-gradient(135deg,#14273d,#0c1a2b)!important;color:#edf5ff!important}
+@media(max-width:620px){.hero{border-radius:0!important;padding-inline:0!important}.three-scene{border-radius:0!important}.section-heading p{font-size:13px!important}.lux-tabs{gap:5px!important;padding:5px!important}.lux-tab{min-width:0!important;gap:5px!important;padding:9px 7px!important;font-size:12px!important}.lux-tab-coin{width:29px!important;height:29px!important;flex-basis:29px!important}}
+
 </style>
 
 
+
+<script id="nabz-asset-shortcuts">
+(() => {
+  const init = () => {
+    document.querySelectorAll('.lux-tab[data-target]').forEach(button => {
+      button.addEventListener('click', () => {
+        const target = document.getElementById(button.dataset.target);
+        if (!target) return;
+        document.querySelectorAll('.lux-tab').forEach(tab => {
+          tab.classList.remove('is-active');
+          tab.removeAttribute('aria-current');
+        });
+        button.classList.add('is-active');
+        button.setAttribute('aria-current', 'true');
+        target.closest('.price-card')?.scrollIntoView({behavior:'smooth',block:'center'});
+      });
+    });
+  };
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded',init,{once:true});
+  else init();
+})();
+</script>
 
 <script id="nabz-focused-3d">
 (()=>{const init=()=>{const scene=document.querySelector('.three-scene');const crystal=scene?.querySelector('.market-crystal');const rings=scene?.querySelectorAll('.crystal-ring');if(!scene||!crystal||!rings?.length||matchMedia('(prefers-reduced-motion: reduce)').matches)return;let frame=0;scene.addEventListener('pointermove',e=>{if(e.pointerType==='touch')return;const r=scene.getBoundingClientRect();const x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;cancelAnimationFrame(frame);frame=requestAnimationFrame(()=>{crystal.style.transform='rotateX('+(-y*12).toFixed(1)+'deg) rotateY('+(x*15).toFixed(1)+'deg) translateZ(22px)';rings.forEach((ring,i)=>{ring.style.animationPlayState='paused';ring.style.transform='rotateX('+(65+i*5).toFixed(1)+'deg) rotateY('+(x*(i+1)*9).toFixed(1)+'deg) rotateZ('+(i*31+x*8).toFixed(1)+'deg) translateY('+(y*(i+1)*8).toFixed(1)+'px)'})})},{passive:true});scene.addEventListener('pointerleave',()=>{cancelAnimationFrame(frame);crystal.style.transform='';rings.forEach(r=>{r.style.transform='';r.style.animationPlayState=''})},{passive:true})};if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init,{once:true});else init()})();
