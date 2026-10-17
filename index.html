@@ -1006,6 +1006,10 @@ html,body{max-width:100%;overflow-x:clip}
 
 <style id="nabz-3d-market-refresh">
 /* Premium dark-market hero: tangible 3D dollar and gold coins. */
+/* Remove the old floating info boxes that overlap the new 3D artwork. */
+.three-scene{border:0!important;border-radius:0!important;background:transparent!important;box-shadow:none!important;overflow:visible!important}
+.three-scene>.crystal-chip,.three-scene>.floating-badge,.three-scene>.scene-label{display:none!important}
+
 .three-scene{isolation:isolate!important;overflow:hidden!important;min-height:450px!important;border:1px solid rgba(103,226,202,.19)!important;border-radius:32px!important;background:radial-gradient(ellipse at 50% 47%,rgba(29,89,111,.38),transparent 47%),radial-gradient(ellipse at 18% 85%,rgba(228,174,66,.13),transparent 35%),linear-gradient(145deg,#0b1727 0%,#101f35 52%,#091321 100%)!important;box-shadow:inset 0 1px rgba(255,255,255,.07),0 28px 65px rgba(0,0,0,.25)!important}
 .three-scene:before,.three-scene:after{content:"";position:absolute;pointer-events:none;border-radius:50%;z-index:0}
 .three-scene:before{width:330px;height:330px;border:1px solid rgba(101,224,203,.12);box-shadow:0 0 55px rgba(49,195,176,.07),inset 0 0 50px rgba(49,195,176,.04)}
