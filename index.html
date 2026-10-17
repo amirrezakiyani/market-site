@@ -1633,6 +1633,111 @@ body a:focus-visible,body button:focus-visible{outline:3px solid #2bc8b5;outline
 .finish-3d-card .finish-float{transform:translateZ(24px)}
 @media(max-width:680px){#owner-contact,#ad-contact-shared{width:calc(100% - 24px)!important;padding:22px 15px!important}.finish-3d-card{transform:none!important}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{transition:none!important;animation:none!important}.finish-3d-card{transform:none!important}}
+
+    
+    /* Nabz-e Bazar premium visual refresh — scoped to presentation only */
+    :root {
+      --bg: #07131b;
+      --bg-light: #0c2029;
+      --card: rgba(13, 35, 43, .88);
+      --card-light: rgba(255, 255, 255, .045);
+      --border: rgba(151, 210, 194, .16);
+      --text: #f3fbf7;
+      --muted: #a5bdb7;
+      --blue: #67d9c0;
+      --purple: #8ddec8;
+      --gold: #f4c96b;
+      --green: #52dfad;
+      --red: #ff7c86;
+    }
+    body {
+      background:
+        radial-gradient(ellipse at 8% 2%, rgba(49, 171, 137, .17), transparent 34%),
+        radial-gradient(ellipse at 92% 8%, rgba(244, 201, 107, .10), transparent 27%),
+        linear-gradient(180deg, #07131b 0%, #091922 48%, #07131b 100%);
+      background-attachment: fixed;
+      letter-spacing: -.12px;
+    }
+    ::selection { background: rgba(82, 223, 173, .3); color: #fff; }
+    a:focus-visible, button:focus-visible {
+      outline: 3px solid var(--gold);
+      outline-offset: 4px;
+      border-radius: 10px;
+    }
+    .site-header {
+      background: rgba(5, 17, 23, .88);
+      border-bottom-color: rgba(151, 210, 194, .14);
+      box-shadow: 0 8px 28px rgba(0, 0, 0, .12);
+    }
+    .logo-icon {
+      box-shadow: 0 8px 26px rgba(82, 223, 173, .18);
+    }
+    .button {
+      border-radius: 14px;
+      background: linear-gradient(135deg, #6de2c0, #d0f2a6);
+      box-shadow: 0 8px 24px rgba(82, 223, 173, .13);
+      transition: transform .22s ease, box-shadow .22s ease, filter .22s ease;
+    }
+    .button:hover {
+      transform: translateY(-2px);
+      filter: saturate(1.08);
+      box-shadow: 0 14px 30px rgba(82, 223, 173, .2);
+    }
+    .button-outline {
+      background: rgba(255, 255, 255, .035);
+      border-color: rgba(151, 210, 194, .25);
+      box-shadow: none;
+    }
+    .ticker-item, .price-card, .panel {
+      border-color: rgba(151, 210, 194, .15);
+      box-shadow: 0 12px 34px rgba(0, 0, 0, .12);
+      backdrop-filter: blur(16px);
+    }
+    .ticker-item {
+      background: linear-gradient(145deg, rgba(24, 63, 66, .62), rgba(10, 29, 37, .72));
+      border-radius: 17px;
+      transition: border-color .2s ease, transform .2s ease, background .2s ease;
+    }
+    .ticker-item:hover {
+      transform: translateY(-2px);
+      border-color: rgba(82, 223, 173, .38);
+    }
+    .price-card {
+      background: linear-gradient(145deg, rgba(20, 52, 57, .78), rgba(10, 27, 35, .9));
+      border-radius: 22px;
+      transition: transform .24s ease, border-color .24s ease, box-shadow .24s ease;
+    }
+    .price-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(82, 223, 173, .42);
+      box-shadow: 0 20px 42px rgba(0, 0, 0, .22);
+    }
+    .panel {
+      background: linear-gradient(145deg, rgba(14, 39, 47, .92), rgba(9, 26, 34, .94));
+      border-radius: 22px;
+    }
+    .section-heading h2 { letter-spacing: -.5px; }
+    .section-heading h2::after {
+      content: "";
+      display: block;
+      width: 44px;
+      height: 3px;
+      margin-top: 10px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, var(--green), var(--gold));
+    }
+    .footer-links a { color: var(--blue); text-underline-offset: 4px; }
+    .footer-links a:hover { color: var(--gold); }
+    @media (max-width: 680px) {
+      .container { width: min(100% - 24px, 1180px); }
+      .hero { padding-top: 52px; }
+      .section-heading { align-items: flex-start; flex-direction: column; }
+      .price-card, .panel, .ticker-item { border-radius: 17px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
+    }
 </style>
 <script id="unified-3d-pointer-motion">
 (()=>{const init=()=>{const candidates=[...document.querySelectorAll('main,.hero,.hero-card,.hero-content,.hero-visual,.orb,.visual,.showcase,.intro,.profile-card,.features .feature,.project-grid .project')];const seen=new Set();let count=0;for(const el of candidates){if(seen.has(el)||count>=7)continue;if(el.closest('#owner-contact,#ad-contact-shared,footer,nav,header'))continue;const rect=el.getBoundingClientRect();if(rect.width<140||rect.height<90)continue;seen.add(el);el.classList.add('finish-3d-card');if(!el.parentElement?.classList.contains('finish-3d-stage')){const wrap=document.createElement('div');wrap.className='finish-3d-stage';el.parentNode.insertBefore(wrap,el);wrap.appendChild(el)}el.addEventListener('pointermove',e=>{if(e.pointerType==='touch'||window.matchMedia('(prefers-reduced-motion: reduce)').matches)return;const r=el.getBoundingClientRect(),x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;el.style.transform='rotateX('+(-y*7).toFixed(2)+'deg) rotateY('+(x*9).toFixed(2)+'deg) translateY(-2px)';el.style.boxShadow='0 24px 50px rgba(52,88,145,.18)'},{passive:true});el.addEventListener('pointerleave',()=>{el.style.transform='';el.style.boxShadow='';},{passive:true});count++} };if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init,{once:true});else init()})();
