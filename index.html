@@ -929,6 +929,67 @@ html,body{max-width:100%;overflow-x:clip}
 .hero-content,.three-scene{min-width:0;width:100%;max-width:100%}
 @media(max-width:620px){.container{width:calc(100% - 28px)}.hero{width:calc(100% - 28px)}.owner-contact{width:auto;max-width:calc(100% - 28px);margin-inline:auto}.crystal-chip,.floating-badge{max-width:48%;overflow-wrap:anywhere}}
 </style>
+
+<style id="dollar-cyberlux-prototype">
+/* Focused cyber-lux dollar prototype */
+.lux-tabs{display:flex;gap:12px;align-items:stretch;margin:12px 0 18px;padding:9px;border:1px solid rgba(245,198,105,.17);border-radius:20px;background:linear-gradient(105deg,rgba(6,12,25,.94),rgba(18,27,49,.92));box-shadow:0 16px 38px #02071355,inset 0 1px #ffffff08;overflow-x:auto;scrollbar-width:none}
+.lux-tabs::-webkit-scrollbar{display:none}
+.lux-tab{flex:1;min-width:118px;display:flex;align-items:center;justify-content:center;gap:9px;padding:11px 14px;border:1px solid transparent;border-radius:14px;background:transparent;color:#b8c6dc;font:inherit;font-weight:800;cursor:default;white-space:nowrap;transition:transform .22s,box-shadow .22s,border-color .22s}
+.lux-tab small{font-size:9px;font-weight:500;color:#7f91ad}
+.lux-tab-coin{display:grid;place-items:center;width:35px;height:35px;flex:0 0 35px;border-radius:50%;font-size:19px;font-weight:900;color:#17101c;background:radial-gradient(circle at 30% 22%,#fff3b7 0,#e9bd59 28%,#95611e 68%,#f6d77b 78%,#8a581b 100%);border:1px solid #ffe6a0;box-shadow:inset 0 0 0 3px #8c612b,0 5px 12px #0008,0 0 15px #e7b94a25;text-shadow:0 1px #fff5}
+.lux-tab .gold-coin{color:#fff2c2;background:radial-gradient(circle at 30% 20%,#fff0aa,#d89d25 45%,#795018 80%);box-shadow:inset 0 0 0 3px #8b5a19,0 5px 12px #0008}
+.lux-tab .btc-coin{color:#fff4dd;background:radial-gradient(circle at 30% 20%,#ffd9a0,#f7931a 48%,#80400a 82%);box-shadow:inset 0 0 0 3px #a6550b,0 5px 12px #0008}
+.lux-tab .euro-coin{color:#dff4ff;background:radial-gradient(circle at 30% 20%,#c8f2ff,#398cff 48%,#172c75 82%);box-shadow:inset 0 0 0 3px #3564a6,0 5px 12px #0008}
+.lux-tab.is-active{color:#fff7df;border-color:#f1c86a88;background:linear-gradient(130deg,#f5c45b1b,#8d6af51b 62%,#4b8dff14);box-shadow:0 0 0 1px #f4c66b1a,inset 0 1px #fff4,0 0 27px #e4ae3a18,0 10px 24px #0005;transform:translateY(-2px)}
+.lux-tab.is-active .lux-tab-coin{animation:coinGlow 3s ease-in-out infinite}
+.lux-tab:disabled{opacity:.62}
+.dollar-showcase{position:relative;isolation:isolate;min-height:420px;display:grid;grid-template-columns:minmax(0,1.02fr) minmax(290px,.98fr);align-items:center;gap:20px;padding:clamp(22px,4vw,48px);overflow:hidden;border:1px solid #d6b66c38;border-radius:30px;background:radial-gradient(ellipse at 17% 43%,#1b4e7838,transparent 43%),radial-gradient(ellipse at 84% 12%,#7045a92a,transparent 34%),linear-gradient(125deg,#080d19 0%,#111a2c 53%,#0a1020 100%);box-shadow:0 28px 70px #0008,inset 0 1px #fff1,inset 0 0 70px #5d8dff08}
+.dollar-showcase:before{content:"";position:absolute;inset:0;z-index:-1;opacity:.18;background-image:linear-gradient(#8eb7ed16 1px,transparent 1px),linear-gradient(90deg,#8eb7ed16 1px,transparent 1px);background-size:34px 34px;mask-image:linear-gradient(90deg,transparent,#000 30%,#000 85%,transparent)}
+.dollar-showcase:after{content:"";position:absolute;inset:12px;pointer-events:none;border:1px solid #e7c56b14;border-radius:22px}
+.dollar-copy{position:relative;z-index:4;grid-column:2;grid-row:1}
+.dollar-kicker{display:flex;align-items:center;gap:9px;color:#9fc8ef;font-size:11px;font-weight:800;letter-spacing:.04em}
+.live-pulse{width:7px;height:7px;border-radius:50%;background:#54e2bb;box-shadow:0 0 0 5px #54e2bb18,0 0 15px #54e2bb;animation:livePulse 2s infinite}
+.kicker-line{width:30px;height:1px;background:linear-gradient(90deg,#f1c86a,transparent)}
+.dollar-copy h3{margin:19px 0 8px;font-size:clamp(29px,3.6vw,46px);line-height:1.35;font-weight:900;letter-spacing:-.04em;color:#f6f4ef}
+.dollar-copy h3 em{font-style:normal;color:#f3cc76;text-shadow:0 0 26px #f3cc7624}
+.dollar-copy>p{max-width:410px;color:#9eacc3;font-size:13px;line-height:2}
+.dollar-price-box{margin-top:24px;padding:18px 19px;border:1px solid #f1cb7844;border-radius:19px;background:linear-gradient(130deg,#ffffff0b,#f2c45d09 55%,#619dff09);box-shadow:inset 0 1px #fff1,0 14px 32px #0003;backdrop-filter:blur(12px)}
+.dollar-price-label{display:flex;align-items:center;gap:9px;color:#c0cde0;font-size:12px}
+.dollar-mini-coin{display:grid;place-items:center;width:27px;height:27px;border-radius:50%;font-size:15px;font-weight:900;color:#17101c;background:linear-gradient(145deg,#fff0ac,#e4ad43 60%,#8d5c1c);box-shadow:inset 0 0 0 2px #9b6d2a,0 3px 10px #0006}
+.dollar-live-tag{margin-right:auto;color:#6ce5c5;border:1px solid #54e2bb40;background:#54e2bb12;border-radius:6px;padding:3px 7px;font-size:9px;font-weight:900;letter-spacing:.12em}
+#luxUsdPrice{display:block;margin-top:9px;color:#fff7e2;font-size:clamp(27px,3.3vw,42px);line-height:1.4;font-weight:900;font-variant-numeric:tabular-nums;letter-spacing:-.035em;text-shadow:0 0 25px #f2c45d18;overflow-wrap:anywhere}
+.dollar-price-unit{display:block;color:#8799b4;font-size:11px;margin-top:2px}.dollar-price-unit i{font-style:normal;color:#e7bd65;padding:0 5px}
+.dollar-metrics{display:flex;flex-wrap:wrap;gap:15px;margin-top:17px;color:#93a7c3;font-size:10px}
+.metric-dot{display:inline-block;width:6px;height:6px;border-radius:50%;margin-left:5px}.dot-blue{background:#68a9ff;box-shadow:0 0 10px #68a9ff}.dot-gold{background:#f1c86a;box-shadow:0 0 10px #f1c86a}
+.dollar-backdrop{position:relative;grid-column:1;grid-row:1;min-height:330px;perspective:1000px;transform-style:preserve-3d;isolation:isolate}
+.dollar-backdrop:before{content:"";position:absolute;width:75%;height:66%;left:9%;top:18%;border-radius:50%;background:radial-gradient(ellipse,#3275b344,transparent 68%);filter:blur(18px);z-index:-1}
+.bill{position:absolute;display:flex;align-items:center;justify-content:center;overflow:hidden;aspect-ratio:2.05/1;width:min(83%,370px);border-radius:13px;border:1px solid #d5e8bca8;background:radial-gradient(ellipse at 50% 50%,#4e976e 0,#245c4c 36%,#173c39 70%,#0b282c 100%);box-shadow:inset 0 0 0 5px #b3d49b38,inset 0 0 0 8px #e6e6b51c,inset 0 0 35px #020e0a88,0 22px 35px #0009,0 0 24px #66c89a18;transform-style:preserve-3d}
+.bill:before{content:"";position:absolute;inset:13px;border:1px solid #c1dba177;border-radius:7px;background:repeating-linear-gradient(35deg,#ffffff08 0 2px,transparent 2px 7px),radial-gradient(ellipse at center,transparent 20%,#b7dba91a 21%,transparent 54%)}
+.bill:after{content:"";position:absolute;inset:0;background:linear-gradient(115deg,transparent 28%,#d8f6d11c 42%,transparent 53%);transform:translateZ(4px)}
+.bill span{position:absolute;top:14px;left:19px;color:#d3e7b2;font-family:Georgia,serif;font-size:clamp(20px,3vw,31px);font-weight:bold;text-shadow:0 2px 5px #0009}
+.bill i{display:grid;place-items:center;width:90px;height:90px;border:2px solid #c1dba18c;border-radius:50%;color:#d8e9bd;font-family:Georgia,serif;font-style:normal;font-size:48px;text-shadow:0 3px 9px #0009;box-shadow:inset 0 0 0 5px #b3d49b20,0 0 25px #a5d9a022}
+.bill b{position:absolute;bottom:13px;left:0;right:0;color:#d2e4b5;font-size:9px;letter-spacing:.2em;text-align:center}
+.bill-back{top:18%;left:5%;transform:rotateY(25deg) rotateX(12deg) rotateZ(-17deg) translateZ(-55px) scale(.82);opacity:.55;filter:saturate(.75)}
+.bill-mid{top:10%;left:14%;transform:rotateY(-22deg) rotateX(13deg) rotateZ(11deg) translateZ(0) scale(.9);opacity:.78}
+.bill-front{top:27%;left:7%;transform:rotateY(18deg) rotateX(7deg) rotateZ(-7deg) translateZ(55px);border-color:#e2d5a6;box-shadow:inset 0 0 0 5px #b3d49b38,inset 0 0 0 8px #e6e6b51c,inset 0 0 35px #020e0a88,0 35px 55px #000b,0 0 34px #66c89a25}
+.dollar-orbit{position:absolute;left:5%;top:16%;width:80%;height:68%;border:1px solid #6aaeff40;border-radius:50%;transform:rotateX(65deg) rotateZ(-20deg);box-shadow:0 0 24px #498bff13;pointer-events:none}
+.dollar-orbit.orbit-gold{border-color:#edc66c5c;transform:rotateX(68deg) rotateZ(31deg) translateZ(30px)}
+.dollar-orbit.orbit-blue{width:64%;height:84%;left:15%;top:7%;border-color:#7b83ff42;transform:rotateY(64deg) rotateZ(17deg)}
+.dollar-spark{position:absolute;color:#f5d68b;text-shadow:0 0 14px #f2c45d;font-size:18px;animation:sparkFloat 4s ease-in-out infinite}
+.spark-a{top:12%;right:13%}.spark-b{bottom:10%;left:15%;animation-delay:-1.5s;color:#83c5ff}.spark-c{right:4%;bottom:25%;animation-delay:-2.4s}
+@keyframes coinGlow{0%,100%{box-shadow:inset 0 0 0 3px #8c612b,0 5px 12px #0008,0 0 12px #e7b94a22}50%{box-shadow:inset 0 0 0 3px #8c612b,0 5px 12px #0008,0 0 23px #e7b94a88}}
+@keyframes livePulse{0%,100%{opacity:1}50%{opacity:.55}}
+@keyframes sparkFloat{0%,100%{transform:translateY(0) translateZ(10px)}50%{transform:translateY(-10px) translateZ(24px)}}
+@media(min-width:1000px){.dollar-showcase:hover .bill-front{transform:rotateY(13deg) rotateX(4deg) rotateZ(-5deg) translate3d(5px,-5px,70px)}.dollar-showcase:hover .bill-mid{transform:rotateY(-18deg) rotateX(9deg) rotateZ(13deg) translate3d(-3px,-2px,10px)}}
+@media(max-width:760px){.dollar-showcase{grid-template-columns:1fr;gap:0;padding:25px 20px 22px;min-height:0}.dollar-backdrop{grid-column:1;grid-row:1;min-height:245px;order:0;transform:scale(.9);transform-origin:center}.dollar-copy{grid-column:1;grid-row:2}.dollar-copy h3{font-size:31px}.dollar-price-box{margin-top:18px}.bill{width:min(84%,330px)}.bill-back{top:15%}.bill-mid{top:8%}.bill-front{top:25%}.dollar-orbit{height:75%}.lux-tab{min-width:104px;gap:6px;padding:9px 10px}.lux-tab small{display:none}}
+@media(max-width:380px){.dollar-showcase{padding:21px 15px}.dollar-backdrop{min-height:205px;transform:scale(.84);margin-inline:-10px}.dollar-copy h3{font-size:27px}.lux-tabs{gap:6px;padding:6px}.lux-tab{min-width:90px;font-size:12px}.lux-tab-coin{width:29px;height:29px;flex-basis:29px;font-size:16px}}
+@media(hover:none){.dollar-showcase:hover .bill-front,.dollar-showcase:hover .bill-mid{transform:initial}}
+@media(prefers-reduced-motion:reduce){.lux-tab.is-active .lux-tab-coin,.live-pulse,.dollar-spark{animation:none!important}.bill,.lux-tab{transition:none!important}}
+</style>
+<script id="dollar-cyberlux-sync">
+(()=>{const sync=()=>{const source=document.getElementById('usdPrice'),mirror=document.getElementById('luxUsdPrice');if(source&&mirror){const value=source.textContent.trim();mirror.textContent=value&&value!=='---'?value:'در حال دریافت'}};if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',()=>{sync();const source=document.getElementById('usdPrice');if(source)new MutationObserver(sync).observe(source,{childList:true,subtree:true,characterData:true});},{once:true});else{sync();const source=document.getElementById('usdPrice');if(source)new MutationObserver(sync).observe(source,{childList:true,subtree:true,characterData:true})}})();
+</script>
+
 </head>
 
 <body>
@@ -1029,6 +1090,35 @@ html,body{max-width:100%;overflow-x:clip}
           در حال دریافت اطلاعات...
         </span>
       </div>
+
+
+      <!-- Dollar concept prototype: the remaining assets keep their current data/UI until this direction is approved. -->
+      <nav class="lux-tabs" aria-label="موضوع بازار">
+        <button class="lux-tab is-active" type="button" aria-current="page"><span class="lux-tab-coin">$</span><span>دلار</span><small>نمونه فعال</small></button>
+        <button class="lux-tab" type="button" disabled><span class="lux-tab-coin gold-coin">Au</span><span>طلا</span><small>مرحله بعد</small></button>
+        <button class="lux-tab" type="button" disabled><span class="lux-tab-coin btc-coin">₿</span><span>بیت‌کوین</span><small>مرحله بعد</small></button>
+        <button class="lux-tab" type="button" disabled><span class="lux-tab-coin euro-coin">€</span><span>یورو</span><small>مرحله بعد</small></button>
+      </nav>
+      <section class="dollar-showcase" aria-labelledby="dollarShowcaseTitle">
+        <div class="dollar-backdrop" aria-hidden="true">
+          <div class="bill bill-back"><span>100</span><i>✦</i><b>UNITED STATES</b></div>
+          <div class="bill bill-mid"><span>100</span><i>◎</i><b>FEDERAL RESERVE</b></div>
+          <div class="bill bill-front"><span>100</span><i>＄</i><b>ONE HUNDRED DOLLARS</b></div>
+          <div class="dollar-orbit orbit-gold"></div><div class="dollar-orbit orbit-blue"></div>
+          <span class="dollar-spark spark-a">✦</span><span class="dollar-spark spark-b">✧</span><span class="dollar-spark spark-c">✦</span>
+        </div>
+        <div class="dollar-copy">
+          <div class="dollar-kicker"><span class="live-pulse"></span> نبض زنده بازار ارز <span class="kicker-line"></span> USD / IRR</div>
+          <h3 id="dollarShowcaseTitle">دلار، <em>در مرکز توجه.</em></h3>
+          <p>نمای زنده بازار دلار با عمق سه‌بعدی، شیشه تیره و جزئیات طلایی.</p>
+          <div class="dollar-price-box">
+            <div class="dollar-price-label"><span class="dollar-mini-coin">$</span><span>قیمت دلار بازار</span><span class="dollar-live-tag">LIVE</span></div>
+            <strong id="luxUsdPrice">در حال دریافت</strong>
+            <span class="dollar-price-unit">تومان <i>•</i> شاخص تتر / دلار</span>
+          </div>
+          <div class="dollar-metrics"><span><i class="metric-dot dot-blue"></i> رابط سایبرلوکس</span><span><i class="metric-dot dot-gold"></i> داده متصل به سایت</span></div>
+        </div>
+      </section>
 
 <div class="price-grid">
 
