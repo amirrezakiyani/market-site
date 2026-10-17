@@ -2506,5 +2506,34 @@ html body > footer::after {
 }
 </style>
 
+
+<style id="nabz-remove-footer-box">
+/* Blend the footer into the page so no separate colored box remains at the bottom. */
+html body > footer {
+  background: transparent !important;
+  background-color: transparent !important;
+  background-image: none !important;
+  border: 0 !important;
+  border-top: 0 !important;
+  border-radius: 0 !important;
+  outline: 0 !important;
+  box-shadow: none !important;
+  margin: 0 !important;
+  padding: 22px 18px 18px !important;
+  width: 100% !important;
+  max-width: none !important;
+}
+html body > footer > *,
+html body > footer nav,
+html body > footer div {
+  background: transparent !important;
+  background-color: transparent !important;
+  background-image: none !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+</style>
+
 </body>
 </html>
