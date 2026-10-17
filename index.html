@@ -990,6 +990,19 @@ html,body{max-width:100%;overflow-x:clip}
 (()=>{const sync=()=>{const source=document.getElementById('usdPrice'),mirror=document.getElementById('luxUsdPrice');if(source&&mirror){const value=source.textContent.trim();mirror.textContent=value&&value!=='---'?value:'در حال دریافت'}};if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',()=>{sync();const source=document.getElementById('usdPrice');if(source)new MutationObserver(sync).observe(source,{childList:true,subtree:true,characterData:true});},{once:true});else{sync();const source=document.getElementById('usdPrice');if(source)new MutationObserver(sync).observe(source,{childList:true,subtree:true,characterData:true})}})();
 </script>
 
+
+<style id="dollar-profile-and-depth">
+.logo-icon{position:relative;isolation:isolate;overflow:hidden;border-radius:50%!important;color:#24180a!important;background:radial-gradient(circle at 28% 20%,#fff2bd,#e4b84f 44%,#95621f 78%,#f7d87c 84%,#8d5a18)!important;border:1px solid #ffe9a2;box-shadow:inset 0 0 0 3px #9c6d2c,0 8px 23px #dba94335,0 0 22px #e7bd5625!important}
+.logo-icon:after{content:"$";position:absolute;inset:0;display:grid;place-items:center;font-family:Georgia,serif;font-size:24px;font-weight:900;color:#fff1bd;text-shadow:0 2px 4px #57370b;transform:translateZ(8px)}
+.logo-icon{font-size:0!important}
+.dollar-backdrop{transition:transform .25s ease-out;will-change:transform}
+.dollar-backdrop .bill,.dollar-backdrop .dollar-orbit{will-change:transform;transition:transform .22s ease-out}
+@media(prefers-reduced-motion:reduce){.dollar-backdrop,.dollar-backdrop .bill,.dollar-backdrop .dollar-orbit{transition:none!important;will-change:auto!important}}
+</style>
+<script id="dollar-scene-parallax">
+(()=>{const init=()=>{const scene=document.querySelector('.dollar-showcase'),visual=scene?.querySelector('.dollar-backdrop');if(!scene||!visual||matchMedia('(prefers-reduced-motion: reduce)').matches||matchMedia('(hover: none)').matches)return;let raf=0;scene.addEventListener('pointermove',e=>{if(e.pointerType==='touch')return;const r=scene.getBoundingClientRect(),x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;cancelAnimationFrame(raf);raf=requestAnimationFrame(()=>{visual.style.transform='translate3d('+(x*-8).toFixed(1)+'px,'+(y*-7).toFixed(1)+'px,0)';const bills=visual.querySelectorAll('.bill');bills.forEach((b,i)=>{const d=i+1;b.style.translate=(x*d*7).toFixed(1)+'px '+(y*d*5).toFixed(1)+'px';});});},{passive:true});scene.addEventListener('pointerleave',()=>{cancelAnimationFrame(raf);visual.style.transform='';visual.querySelectorAll('.bill').forEach(b=>b.style.translate='');},{passive:true})};if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init,{once:true});else init()})();
+</script>
+
 </head>
 
 <body>
