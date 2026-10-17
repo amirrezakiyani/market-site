@@ -1513,23 +1513,7 @@ document.querySelectorAll(".nav-list a").forEach(link => {
       });
     });
 
-const threeScene = document.querySelector(".three-scene");
-    const marketCrystal = document.querySelector(".market-crystal");
-    const crystalRings = document.querySelectorAll(".crystal-ring");
-    const tiltItems = document.querySelectorAll(".price-card, .panel, .ticker-item");
-    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (threeScene && marketCrystal && !reduceMotion) {
-      threeScene.addEventListener("pointermove", (event) => {
-        const rect = threeScene.getBoundingClientRect(); const x=(event.clientX-rect.left)/rect.width-.5; const y=(event.clientY-rect.top)/rect.height-.5;
-        marketCrystal.style.transform=`translate3d(${x*42}px,${y*32}px,58px) rotateX(${-y*25}deg) rotateY(${x*32}deg) rotateZ(${x*5}deg)`;
-        crystalRings.forEach((ring,index)=>ring.style.transform=`translate3d(${x*(index+1)*12}px,${y*(index+1)*9}px,0) rotateX(${71-index*8}deg) rotateY(${index*69}deg) rotateZ(${-17+index*37+x*18}deg)`);
-        threeScene.style.setProperty("--mx",`${(x+.5)*100}%`); threeScene.style.setProperty("--my",`${(y+.5)*100}%`);
-      });
-      threeScene.addEventListener("pointerleave",()=>{marketCrystal.style.transform="";crystalRings.forEach(ring=>ring.style.transform="");threeScene.style.setProperty("--mx","50%");threeScene.style.setProperty("--my","50%");});
-      tiltItems.forEach(item=>{item.addEventListener("pointermove",event=>{const rect=item.getBoundingClientRect();const x=(event.clientX-rect.left)/rect.width-.5;const y=(event.clientY-rect.top)/rect.height-.5;item.style.transform=`perspective(700px) rotateX(${-y*3}deg) rotateY(${x*3}deg) translateY(-4px)`});item.addEventListener("pointerleave",()=>item.style.transform="")});
-    }
-
-    $("refreshButton").addEventListener("click", loadPrices);
+$("refreshButton").addEventListener("click", loadPrices);
 
 loadPrices();
     const initializeChart = () => {
@@ -1767,39 +1751,32 @@ body :is(.card,.feature,.project,.hero-card,.panel,.content-card){color:#172744}
 @media(max-width:620px){.container{width:calc(100% - 26px)}.hero{padding:40px 0 25px;min-height:0}.hero:before{inset:10px -8px 0;border-radius:25px}h1{font-size:clamp(35px,9vw,48px);letter-spacing:-1px}.hero-description{font-size:14px}.three-scene{height:330px;margin-top:2px;overflow:hidden}.market-crystal{width:205px;height:205px}.crystal-ring{width:280px;height:90px}.crystal-ring.two{width:245px;height:245px}.crystal-ring.three{width:225px;height:225px}.crystal-chip,.floating-badge{font-size:9px;padding:7px 9px}.chip-a{right:0;top:9%}.chip-b{right:0;bottom:10%}.chip-c{left:0;top:11%}.floating-chart{left:0;bottom:0;transform:scale(.82);transform-origin:bottom left}.scene-label{display:none}.ticker-item{min-width:165px}.price-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.price-card{min-height:180px;padding:15px}.asset-price{font-size:17px}.section-heading{margin-top:40px;align-items:flex-start;flex-direction:column}.navbar{min-height:68px}}
 @media(max-width:370px){.price-grid{grid-template-columns:1fr}.three-scene{height:290px}.market-crystal{width:180px;height:180px}}
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;animation:none!important;transition:none!important}.market-crystal{transform:none!important}}
+
+/* NABZ MARKET — balanced midnight palette, high-contrast live dashboard */
+:root{--bg:#0d1728;--bg-light:#15243a;--card:#182a42;--card-light:rgba(255,255,255,.045);--border:rgba(163,190,226,.16);--text:#eff5ff;--muted:#a7b8d0;--blue:#7da7ff;--purple:#a99aff;--gold:#f4c36b;--green:#54dfbd;--red:#ff8797;--nabz-bg:#0d1728;--nabz-surface:#16263d;--nabz-raised:#1b304b;--nabz-ink:#eef5ff}
+html,body{background-color:#0d1728!important;color:#eff5ff!important}
+body{background:radial-gradient(ellipse at 12% 0%,rgba(70,111,220,.19),transparent 34%),radial-gradient(ellipse at 88% 9%,rgba(31,194,168,.13),transparent 29%),radial-gradient(ellipse at 48% 60%,rgba(41,65,110,.12),transparent 52%),linear-gradient(180deg,#101d31 0%,#0d1728 48%,#111d30 100%)!important;background-attachment:fixed;color:#eff5ff!important}
+.site-header{background:rgba(13,23,40,.91)!important;border-bottom:1px solid rgba(143,174,219,.18)!important;box-shadow:0 10px 32px rgba(0,0,0,.18)!important}
+.logo{color:#f4f7ff!important}.logo-icon{color:#10253a!important;background:linear-gradient(145deg,#66e0cb,#f4c36b)!important;box-shadow:0 7px 24px rgba(84,223,189,.2)!important}.nav-list{color:#aabbd4!important}.nav-list a:hover{color:#6de6d0!important}
+.button{color:#092336!important;background:linear-gradient(120deg,#68e0cc,#8eb9ff)!important;box-shadow:0 9px 26px rgba(67,187,194,.17)!important}.button-outline{color:#eaf2ff!important;background:rgba(255,255,255,.045)!important;border:1px solid rgba(163,190,226,.22)!important}
+.hero{position:relative;border:1px solid rgba(112,192,210,.19)!important;border-radius:30px!important;background:linear-gradient(115deg,rgba(21,42,65,.97),rgba(19,35,59,.95) 54%,rgba(24,43,63,.96))!important;box-shadow:0 25px 65px rgba(1,8,20,.22),inset 0 1px rgba(255,255,255,.055)!important;overflow:hidden}.hero:after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(120deg,transparent 28%,rgba(93,220,199,.035) 55%,rgba(125,167,255,.06))}.hero-content{z-index:2}.eyebrow{color:#70e2d0!important;background:rgba(84,223,189,.08);border:1px solid rgba(84,223,189,.18);border-radius:999px;padding:7px 13px;font-size:12px;font-weight:700}h1{color:#f2f6ff!important;text-wrap:balance;letter-spacing:-.04em}h1 span{color:#f4c36b!important;text-shadow:0 0 24px rgba(244,195,107,.13)}.hero-description{color:#b2c2d8!important}
+.three-scene{border:1px solid rgba(112,192,210,.17)!important;border-radius:25px!important;background:radial-gradient(ellipse at 48% 42%,rgba(52,132,164,.34),transparent 49%),linear-gradient(145deg,#142c47,#111e35 72%)!important;box-shadow:inset 0 1px rgba(255,255,255,.05),0 22px 48px rgba(0,0,0,.18)!important}.three-scene:after{opacity:.24!important;background-image:linear-gradient(rgba(120,174,220,.09) 1px,transparent 1px),linear-gradient(90deg,rgba(120,174,220,.09) 1px,transparent 1px)!important;background-size:30px 30px!important;mask-image:radial-gradient(ellipse at center,#000 0%,transparent 80%)}.three-scene:before{background:radial-gradient(circle,rgba(67,222,199,.22),rgba(93,126,246,.11) 45%,transparent 73%)!important}.market-crystal{filter:drop-shadow(0 26px 34px rgba(0,0,0,.4))!important}.crystal-front{background:linear-gradient(135deg,#69e3cf,#3d8cb5 48%,#5553ad)!important}.crystal-back{background:linear-gradient(145deg,#152a4a,#5d4caa)!important}.crystal-depth{background:linear-gradient(135deg,rgba(84,223,189,.48),rgba(125,167,255,.48))!important}.crystal-ring{border-color:rgba(94,226,207,.58)!important;box-shadow:0 0 22px rgba(72,207,194,.12)!important}.crystal-ring.two{border-color:rgba(125,167,255,.4)!important}.crystal-ring.three{border-color:rgba(244,195,107,.4)!important}
+.crystal-chip,.floating-badge,.floating-chart{color:#d9e7f8!important;background:rgba(18,34,55,.94)!important;border:1px solid rgba(146,187,218,.23)!important;box-shadow:0 12px 28px rgba(0,0,0,.24)!important}.crystal-chip b,.floating-badge b{color:#70e2d0!important}.floating-chart small{color:#a9bdd6!important}.floating-chart polyline{stroke:#5de0c1!important}.scene-label{color:#c4d6ee!important;background:rgba(18,34,55,.88)!important}
+.ticker{border-color:rgba(143,174,219,.14)!important;background:rgba(16,30,49,.46)!important;border-radius:20px;padding:15px!important;gap:12px}.ticker-item{background:linear-gradient(145deg,#1b304a,#16253b)!important;border:1px solid rgba(143,174,219,.17)!important;border-radius:16px!important;box-shadow:0 9px 24px rgba(0,0,0,.13)!important}.ticker-item small{color:#9fb2cc!important}.ticker-item strong{color:#f2f6ff!important;font-variant-numeric:tabular-nums}
+.section-heading h2,.panel h2,.panel h3,.info-section h2,.info-section h3{color:#f0f5ff!important}.section-heading p,.panel p,.info-section p{color:#adbed5!important}.update-status{color:#72dfc8!important;background:rgba(84,223,189,.08);border:1px solid rgba(84,223,189,.16);padding:7px 11px;border-radius:11px;font-size:12px}
+.price-grid{gap:15px}.price-card{position:relative;overflow:hidden;background:linear-gradient(145deg,#1b304a,#14243a)!important;border:1px solid rgba(143,174,219,.18)!important;border-radius:20px!important;box-shadow:0 12px 30px rgba(0,0,0,.16),inset 0 1px rgba(255,255,255,.035)!important;transform:none!important;backface-visibility:visible!important}.price-card:before{content:"";position:absolute;inset:0 0 auto;height:3px;background:linear-gradient(90deg,var(--accent,#70e2d0),transparent 88%);opacity:.95}.price-card:after{content:"";position:absolute;inset:auto -25px -55px auto;width:125px;height:125px;border-radius:50%;background:var(--accent,#70e2d0);opacity:.055;filter:blur(4px);pointer-events:none}.price-card:hover{transform:translateY(-3px)!important;border-color:rgba(112,226,208,.4)!important;box-shadow:0 18px 35px rgba(0,0,0,.22)!important}.card-title{color:#b3c3d9!important}.asset-price{color:#f6f8ff!important;font-size:clamp(18px,2vw,24px)!important;font-weight:800;font-variant-numeric:tabular-nums;overflow-wrap:anywhere}.asset-unit{color:#9cafc8!important}.asset-icon{background:rgba(255,255,255,.06)!important;color:var(--accent,#70e2d0)!important;border:1px solid rgba(255,255,255,.08)}.asset-change{color:#76dcca!important}.asset-change.down{color:#ff8998!important}
+.dashboard{gap:17px}.panel{background:linear-gradient(145deg,#1a2d46,#14243a)!important;border:1px solid rgba(143,174,219,.17)!important;border-radius:22px!important;box-shadow:0 15px 34px rgba(0,0,0,.17)!important;color:#edf4ff!important}.panel h3{margin-bottom:10px}.panel table{color:#e7effb!important}.panel th{color:#a6bad3!important;background:rgba(255,255,255,.035)}.panel td,.panel th{border-color:rgba(143,174,219,.14)!important}.panel tr:hover td{background:rgba(255,255,255,.025)}.online{color:#63e0be!important}.offline{color:#ff9aa7!important}.chart-container{background:rgba(8,17,31,.25);border:1px solid rgba(143,174,219,.12);border-radius:16px;padding:10px}
+.advertisement{background:linear-gradient(135deg,rgba(84,223,189,.09),rgba(125,167,255,.09))!important;border:1px solid rgba(112,192,210,.18)!important;border-radius:17px!important;color:#e8f2ff!important}.advertisement strong{color:#f4c36b!important}.advertisement span{color:#bdcce0!important}.advertisement a{color:#75e3d1!important;overflow-wrap:anywhere}
+.info-section{margin-top:22px!important;padding:clamp(22px,3vw,36px)!important;background:linear-gradient(145deg,#192d46,#142238)!important;border:1px solid rgba(143,174,219,.17)!important;color:#edf4ff!important}.info-section h2,.info-section h3{margin-top:18px}.info-section p{line-height:2.05}.info-section strong{color:#f4c36b!important}
+footer{margin-top:45px!important;padding:30px 20px!important;background:#0a1424!important;border-top:1px solid rgba(143,174,219,.16)!important;color:#aabbd3!important}footer a{color:#70e2d0!important}footer a:hover{color:#f4c36b!important}
+#owner-contact,#ad-contact-shared{background:linear-gradient(135deg,#1a304b 0%,#17263d 55%,#153644 100%)!important;color:#edf5ff!important;border:1px solid rgba(112,192,210,.25)!important;box-shadow:0 18px 44px rgba(0,0,0,.22),inset 0 1px rgba(255,255,255,.05)!important}#owner-contact h2,#ad-contact-shared h2{color:#f2f6ff!important}#owner-contact p,#ad-contact-shared p{color:#b6c7dc!important}#owner-contact a,#ad-contact-shared a{color:#72e2d0!important}#owner-contact .owner-signature,#ad-contact-shared .owner-signature{color:#f0f5ff!important;border-color:rgba(143,174,219,.18)!important}
+a:focus-visible,button:focus-visible{outline:3px solid #f4c36b!important;outline-offset:4px}.finish-3d-stage{perspective:none!important}.finish-3d-card{transform:none!important;will-change:auto!important}.finish-3d-card:after{display:none!important}
+@media(max-width:950px){.hero{gap:18px}.three-scene{min-height:350px}}
+@media(max-width:620px){.hero{padding:28px 15px!important;border-radius:22px!important}.three-scene{min-height:300px!important;height:300px!important;border-radius:18px!important}.ticker{padding:10px!important}.ticker-item{min-width:150px!important}.price-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.price-card{padding:15px!important;min-width:0}.asset-price{font-size:17px!important}.panel,.info-section{border-radius:18px!important}.info-section{padding:20px!important}#owner-contact,#ad-contact-shared{width:calc(100% - 28px)!important;padding:20px 16px!important}}
+@media(max-width:370px){.price-grid{grid-template-columns:1fr}.three-scene{height:270px!important;min-height:270px!important}}
+@media(prefers-reduced-motion:reduce){.market-crystal,.crystal-ring,.particle{animation:none!important}*,*:before,*:after{transition:none!important}}
 </style>
-<script id="nabz-hero-interaction">
-(()=> {
-  const start = () => {
-    const scene = document.querySelector('.three-scene');
-    const crystal = scene && scene.querySelector('.market-crystal');
-    if (!scene || !crystal || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-    let frame = 0;
-    scene.addEventListener('pointermove', (event) => {
-      if (event.pointerType === 'touch') return;
-      const rect = scene.getBoundingClientRect();
-      const x = (event.clientX - rect.left) / rect.width - .5;
-      const y = (event.clientY - rect.top) / rect.height - .5;
-      cancelAnimationFrame(frame);
-      frame = requestAnimationFrame(() => {
-        crystal.classList.add('is-interacting');
-        crystal.style.transform = 'rotateX(' + (-y * 11).toFixed(2) + 'deg) rotateY(' + (x * 13).toFixed(2) + 'deg) translateZ(16px)';
-        scene.style.setProperty('--pointer-x', (x * 24).toFixed(1) + 'px');
-        scene.style.setProperty('--pointer-y', (y * 18).toFixed(1) + 'px');
-      });
-    }, {passive:true});
-    scene.addEventListener('pointerleave', () => {
-      cancelAnimationFrame(frame);
-      crystal.style.transform = '';
-      crystal.classList.remove('is-interacting');
-      scene.style.setProperty('--pointer-x', '0px');
-      scene.style.setProperty('--pointer-y', '0px');
-    }, {passive:true});
-  };
-  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start, {once:true});
-  else start();
-})();
-</script>
+
 
 </body>
 </html>
