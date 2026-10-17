@@ -891,6 +891,37 @@ body{font-family:Vazirmatn,Tahoma,sans-serif;background:radial-gradient(ellipse 
 @media(max-width:620px){.hero{border-radius:22px}.price-grid{gap:12px}.price-card{border-radius:17px}}
 @media(prefers-reduced-motion:reduce){.button,.button-outline,.price-card,.panel{transition:none}}
 </style>
+
+<style id="market-3d-rebuild">
+/* Rebuilt hero: restrained, legible 3D rather than a pile of spinning decorations */
+.three-scene{height:440px;min-height:440px;overflow:hidden;isolation:isolate;perspective:1200px;border:1px solid rgba(111,225,220,.16);border-radius:28px;background:radial-gradient(ellipse at 50% 44%,#174e5b 0%,#0d263b 34%,#0a172a 72%);box-shadow:inset 0 1px rgba(255,255,255,.07),0 28px 65px rgba(0,0,0,.22)}
+.three-scene:after{opacity:.16;background-image:linear-gradient(#7dd3fc12 1px,transparent 1px),linear-gradient(90deg,#7dd3fc12 1px,transparent 1px);background-size:32px 32px;mask-image:radial-gradient(ellipse at center,#000 0%,transparent 78%)}
+.three-scene:before{width:290px;height:290px;background:radial-gradient(circle,#3bd5c333,transparent 68%);filter:blur(18px)}
+.market-crystal{width:205px;height:205px;animation:crystalFloat 7s ease-in-out infinite;filter:drop-shadow(0 24px 30px #02081788)}
+.crystal-depth{inset:24px;background:linear-gradient(135deg,#42e4d944,#3b82f644 55%,#8b5cf644);filter:none;box-shadow:0 0 48px #22d3ee22}
+.crystal-face{filter:none}
+.crystal-face:before{background:linear-gradient(145deg,#d6fff3d9 0%,#5ddbc8cc 25%,#3177b6e6 58%,#292b62f2 100%)}
+.crystal-face:after{inset:14px;background:linear-gradient(145deg,#ffffff42,#ffffff08 45%,#07152b66);border-color:#d5fff366}
+.crystal-front{transform:translateZ(34px)}
+.crystal-back{transform:translateZ(-34px) rotateY(180deg);opacity:.55}
+.crystal-content{transform:translateZ(49px);text-shadow:0 3px 18px #06101caa}
+.crystal-content strong{font-size:32px;letter-spacing:.12em}
+.crystal-content span{font-size:9px;letter-spacing:.08em;color:#d4fff7}
+.crystal-ring{width:290px;height:82px;border:1px solid #63e6d577;box-shadow:0 0 24px #22d3ee12;animation-duration:16s}
+.crystal-ring.two{width:260px;height:260px;border-color:#7dd3fc33;animation-duration:22s}
+.crystal-ring.three{width:220px;height:220px;border-color:#a78bfa33;animation-duration:26s}
+.crystal-chip,.floating-badge{border:1px solid #9cefe52b;border-radius:12px;background:#07192bd9;color:#d9f6f5;box-shadow:0 12px 28px #02081755;backdrop-filter:blur(14px);font-size:11px;animation:none}
+.crystal-chip b,.floating-badge b{display:inline-block;color:#6ce5ce;font-variant-numeric:tabular-nums}
+.chip-a{right:5%;top:13%}.chip-b{left:4%;bottom:19%}.chip-c{right:5%;bottom:8%;color:#b8cce0}
+.floating-chart{width:102px;height:64px;left:5%;top:20%;border-color:#9cefe528;border-radius:14px;background:#07192bd9;box-shadow:0 12px 28px #02081755}
+.floating-chart small{color:#9db9cb;font-size:8px}
+.floating-chart polyline{stroke:#61e2c0}
+.badge-one{top:auto;right:5%;bottom:23%}.badge-two{left:5%;bottom:7%}
+.scene-label{display:none}.crystal-spark,.particle{opacity:.35}
+@media(max-width:950px){.three-scene{height:390px;min-height:390px}}
+@media(max-width:620px){.three-scene{height:320px;min-height:320px;border-radius:21px}.market-crystal{width:160px;height:160px}.crystal-content strong{font-size:25px}.crystal-ring{width:225px;height:65px}.crystal-ring.two{width:205px;height:205px}.crystal-ring.three{width:180px;height:180px}.crystal-chip{font-size:9px;padding:7px 8px}.floating-chart{width:84px;height:52px;left:2%;top:17%}.floating-badge{font-size:9px;padding:7px 8px}.badge-one{right:3%;bottom:24%}.badge-two{left:3%;bottom:7%}}
+@media(prefers-reduced-motion:reduce){.market-crystal,.crystal-ring,.crystal-spark,.particle{animation:none!important}}
+</style>
 </head>
 
 <body>
@@ -940,7 +971,7 @@ body{font-family:Vazirmatn,Tahoma,sans-serif;background:radial-gradient(ellipse 
         </h1>
 
 <p class="hero-description">
-          قیمت دلار، یورو، طلا، نقره و بیتکوین را در یک داشبورد
+          نرخ شاخص تتر به تومان، یورو، طلا، نقره و بیتکوین را در یک داشبورد
           مدرن، سریع و زیبا مشاهده کن.
         </p>
 
@@ -995,7 +1026,7 @@ body{font-family:Vazirmatn,Tahoma,sans-serif;background:radial-gradient(ellipse 
 <div class="price-grid">
 
 <article class="price-card" style="--accent:#61a8ff">
-          <div class="card-title">دلار آمریکا</div>
+          <div class="card-title">دلار بازار (شاخص تتر)</div>
           <div class="asset-icon">$</div>
           <div class="asset-price" id="usdPrice">---</div>
           <div class="asset-unit">تومان</div>
@@ -1164,11 +1195,13 @@ let dollarSource = "";
           throw new Error("پاسخ نامعتبر از منبع نرخ");
         }
 
-        let priceRial = Number(data.lastTradePrice || 0);
+        // Use the current best bid/ask midpoint first; lastTradePrice can lag behind
+        // the live order book. Nobitex quotes this market in rial, not toman.
+        const bid = Number(data.bids?.[0]?.[0] || 0);
+        const ask = Number(data.asks?.[0]?.[0] || 0);
+        let priceRial = (bid > 0 && ask > 0 && ask >= bid) ? (bid + ask) / 2 : 0;
         if (!(Number.isFinite(priceRial) && priceRial > 0)) {
-          const bid = Number(data.bids?.[0]?.[0] || 0);
-          const ask = Number(data.asks?.[0]?.[0] || 0);
-          if (bid > 0 && ask > 0) priceRial = (bid + ask) / 2;
+          priceRial = Number(data.lastTradePrice || 0);
         }
 
         if (!(Number.isFinite(priceRial) && priceRial > 0)) {
