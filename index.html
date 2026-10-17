@@ -2442,5 +2442,69 @@ footer{position:relative!important;z-index:2!important;margin-top:35px!important
 })();
 </script>
 
+
+<style id="nabz-final-edge-band-fix">
+/* Final edge-to-edge correction: placed last so earlier legacy styles cannot override it. */
+:root, html {
+  margin: 0 !important;
+  padding: 0 !important;
+  background: #070b18 !important;
+  background-color: #070b18 !important;
+  color-scheme: dark;
+}
+html body {
+  margin: 0 !important;
+  padding: 0 !important;
+  width: 100% !important;
+  min-height: 100vh !important;
+  background: #070b18 !important;
+  background-color: #070b18 !important;
+  background-image: none !important;
+  overflow-x: hidden !important;
+}
+html body > header.site-header {
+  position: sticky !important;
+  inset-block-start: 0 !important;
+  margin: 0 !important;
+  padding-block: 15px !important;
+  width: 100% !important;
+  max-width: none !important;
+  background: #0b1224 !important;
+  background-image: none !important;
+  border: 0 !important;
+  border-bottom: 1px solid rgba(255,215,0,.2) !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+html body > main {
+  margin-block-start: 0 !important;
+}
+html body > footer {
+  display: block !important;
+  position: relative !important;
+  inset: auto !important;
+  clear: both !important;
+  margin: 0 !important;
+  margin-block: 0 !important;
+  padding: 30px 18px !important;
+  width: 100% !important;
+  max-width: none !important;
+  box-sizing: border-box !important;
+  background: #070b18 !important;
+  background-color: #070b18 !important;
+  background-image: none !important;
+  border: 0 !important;
+  border-top: 1px solid rgba(255,215,0,.16) !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  color: #dce7f6 !important;
+}
+html body > footer::before,
+html body > footer::after {
+  content: none !important;
+  display: none !important;
+}
+</style>
+
 </body>
 </html>
