@@ -1451,13 +1451,13 @@ datasets: [
             {
               label: "روند نمایشی (دادهٔ نمونه)",
               data: [42, 48, 45, 58, 55, 68, 74],
-              borderColor: "#4d91f7",
-              backgroundColor: "rgba(77, 145, 247, .13)",
+              borderColor: "#5de0c1",
+              backgroundColor: "rgba(93, 224, 193, .12)",
               borderWidth: 3,
               fill: true,
               tension: .4,
               pointRadius: 4,
-              pointBackgroundColor: "#f5a623"
+              pointBackgroundColor: "#f4c36b"
             }
           ]
         },
@@ -1469,7 +1469,7 @@ options: {
 plugins: {
             legend: {
               labels: {
-                color: "#334e72",
+                color: "#d6e5f8",
                 font: {
                   family: "Vazirmatn"
                 }
@@ -1480,13 +1480,13 @@ plugins: {
 scales: {
             x: {
               ticks: {
-                color: "#71819b",
+                color: "#9fb4d0",
                 font: {
                   family: "Vazirmatn"
                 }
               },
               grid: {
-                color: "rgba(76,120,171,.12)"
+                color: "rgba(145,177,218,.14)"
               }
             },
 
@@ -1778,5 +1778,9 @@ a:focus-visible,button:focus-visible{outline:3px solid #f4c36b!important;outline
 </style>
 
 
+
+<script id="nabz-focused-3d">
+(()=>{const init=()=>{const scene=document.querySelector('.three-scene');const crystal=scene?.querySelector('.market-crystal');const rings=scene?.querySelectorAll('.crystal-ring');if(!scene||!crystal||!rings?.length||matchMedia('(prefers-reduced-motion: reduce)').matches)return;let frame=0;scene.addEventListener('pointermove',e=>{if(e.pointerType==='touch')return;const r=scene.getBoundingClientRect();const x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;cancelAnimationFrame(frame);frame=requestAnimationFrame(()=>{crystal.style.transform='rotateX('+(-y*12).toFixed(1)+'deg) rotateY('+(x*15).toFixed(1)+'deg) translateZ(22px)';rings.forEach((ring,i)=>{ring.style.animationPlayState='paused';ring.style.transform='rotateX('+(65+i*5).toFixed(1)+'deg) rotateY('+(x*(i+1)*9).toFixed(1)+'deg) rotateZ('+(i*31+x*8).toFixed(1)+'deg) translateY('+(y*(i+1)*8).toFixed(1)+'px)'})})},{passive:true});scene.addEventListener('pointerleave',()=>{cancelAnimationFrame(frame);crystal.style.transform='';rings.forEach(r=>{r.style.transform='';r.style.animationPlayState=''})},{passive:true})};if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init,{once:true});else init()})();
+</script>
 </body>
 </html>
